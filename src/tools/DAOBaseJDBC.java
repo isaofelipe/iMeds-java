@@ -21,7 +21,7 @@ public class DAOBaseJDBC {
             conn = DriverManager.getConnection(Config.BD_URL, Config.BD_LOGIN, Config.BD_SENHA);
         } 
         catch (ClassNotFoundException e) {
-            System.out.println("FATAL: driver não encontrado");
+            System.out.println("FATAL: driver não encontrado" + e.getMessage());
             System.exit(1);
         } 
         catch (SQLException e) {

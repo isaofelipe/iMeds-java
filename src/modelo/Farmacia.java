@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @author alunodev06
  */
-public class Farmacia {
+public class Farmacia extends Usuario{
     public int idFarmacia;
     public String nome;
     public String CNPJ;

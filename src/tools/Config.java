@@ -12,7 +12,7 @@ package tools;
 public class Config {
     
     public static final String NOME_DRIVER = "com.mysql.jdbc.Driver";
-    public static final String BD_URL = "jdbc:mysql://localhost:3307/mysqllivroautor1x1";
+    public static final String BD_URL = "jdbc:mysql://localhost:3306/iMeds";
     public static final String BD_LOGIN = "root";
-    public static final String BD_SENHA = "123456";
+    public static final String BD_SENHA = "1234";
 }

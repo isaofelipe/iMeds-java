@@ -8,6 +8,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import modelo.Farmacia;
 import tools.DAOBaseJDBC;
 
 /**
@@ -16,45 +17,48 @@ import tools.DAOBaseJDBC;
  */
 public class FarmaciaDAOJDBC extends DAOBaseJDBC implements FarmaciaDAO{
     @Override
-    public void salvarCliente(String nome, String endereco, String cpf, String telefone, String email, String senha) {
+    public boolean salvarFarmacia(Farmacia farmacia) {
         PreparedStatement stmt;
         try{
-            //tabela cliente
-            stmt = conn.prepareStatement("INSERT INTO cliente(idCliente, nome, cpf, endereco, telefone) VALUES(?, ?, ?, ?, ?)");
-            int id = retornaIdUsuario(email, senha);
+            //tabela farmacia
+            stmt = conn.prepareStatement("INSERT INTO farmacia(idFarmacia, nome, cnpj, endereco, telefone) VALUES(?, ?, ?, ?, ?)");
+            int id = retornaIdFarmacia(farmacia.getEmail(), farmacia.getSenha());
             if(id != 0){
                 stmt.setInt(1, id);
-                stmt.setString(2, nome);
-                stmt.setString(3, cpf);
-                stmt.setString(4, endereco);
-                stmt.setString(5, telefone);
+                stmt.setString(2, farmacia.getNome());
+                stmt.setString(3, farmacia.getCNPJ());
+                stmt.setString(4, farmacia.getEndereco());
+                stmt.setString(5, farmacia.getTelefone());
                 stmt.executeUpdate();
                 stmt.close();
             }
             else{
-                System.out.println("usuario nao encontrado!");
+                System.out.println("Erro encontrar id usuario");
+                return false;
             }
         }
         catch(SQLException e){
             System.out.println("Erro sql" + e.getStackTrace());
+            return false;
         }
+        return true;
     }
- 
-    private int retornaIdUsuario(String email, String senha){
+    
+    private int retornaIdFarmacia(String email, String senha){
         PreparedStatement stmt2;
         try{
-            stmt2 = conn.prepareStatement("INSERT INTO usuario(email, senha) VALUES(?, ?)");
+            stmt2 = conn.prepareStatement("INSERT INTO usuario(email, senha, tipo) VALUES(?, ?, 1)");
             stmt2.setString(1, email);
             stmt2.setString(2, senha);
             stmt2.executeUpdate();
             stmt2.clearBatch();     //limpa a query anterior do objeto
             
             //seleção do ID
-            stmt2 = conn.prepareStatement("SELECT idusuario FROM usuario where email = ? and senha = ?");
+            stmt2 = conn.prepareStatement("SELECT idusuario FROM usuario WHERE email = ? AND senha = ? AND tipo = 1");
             stmt2.setString(1, email);
             stmt2.setString(2, senha);
             ResultSet rs = stmt2.executeQuery();
-            int id = rs.getInt("id");
+            int id = rs.getInt("idusuario");
             stmt2.close();
             return id;
         }

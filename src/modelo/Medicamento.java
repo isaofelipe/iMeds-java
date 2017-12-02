@@ -15,22 +15,22 @@ import java.util.Set;
 public class Medicamento {
     public int idMedicamento;
     public String nome;
-    public String tipo;
-    public Boolean prescricao;
-    private Set farmaciaMedicamento;
+    public String descricao;
+    public Boolean prescrito;
+    private Set<Farmacia> farmacia;
     
     public Medicamento(){
-        this.farmaciaMedicamento = new HashSet<>();
+        this.farmacia = new HashSet<>();
     }
     public void adicionarFarmaciaMedicamento(FarmaciaMedicamento farmaciaMedicamento){
         this.getFarmaciaMedicamento().add(farmaciaMedicamento);
     }
-    public void removerFarmaciaMedicamento(FarmaciaMedicamento farmaciaMedicamento){
+    public void removerFarmaciaMedicamento(Farmacia farmaciaMedicamento){
         this.getFarmaciaMedicamento().remove(farmaciaMedicamento);
     }
 
     public Set getFarmaciaMedicamento() {
-        return farmaciaMedicamento;
+        return farmacia;
     }
 
     public int getIdMedicamento() {
@@ -49,19 +49,19 @@ public class Medicamento {
         this.nome = nome;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    
+    public Boolean getprescrito() {
+        return prescrito;
     }
 
-    public Boolean getPrescricao() {
-        return prescricao;
-    }
-
-    public void setPrescricao(Boolean prescricao) {
-        this.prescricao = prescricao;
+    public void setprescrito(Boolean prescrito) {
+        this.prescrito = prescrito;
     }
 }

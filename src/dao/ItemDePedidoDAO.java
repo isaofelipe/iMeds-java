@@ -10,5 +10,5 @@ package dao;
  * @author alunodev06
  */
 public interface ItemDePedidoDAO {
-    
+    public void salvarItemDePedido();
 }

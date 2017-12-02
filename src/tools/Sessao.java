@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package tools;
 
 import modelo.Cliente;
+import modelo.Farmacia;
 
 /**
  *
- * @author alunodev06
+ * @author Isao Felipe Morigaki
  */
-public interface ClienteDAO {
-    public boolean salvarCliente(Cliente cliente);
-    
+public class Sessao {
+    public static Farmacia farmaciaLogada;
+    public static Cliente clienteLogado;
 }

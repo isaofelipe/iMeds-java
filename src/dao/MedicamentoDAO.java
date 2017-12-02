@@ -14,4 +14,5 @@ import modelo.Medicamento;
  */
 public interface MedicamentoDAO {
     public ArrayList<Medicamento> buscarTodos();
+    public Medicamento buscarPorNome(String nome);
 }

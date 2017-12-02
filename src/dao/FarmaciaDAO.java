@@ -5,10 +5,12 @@
  */
 package dao;
 
+import modelo.Farmacia;
+
 /**
  *
  * @author alunodev06
  */
 public interface FarmaciaDAO {
-    
+    public boolean salvarFarmacia(Farmacia farmacia);
 }

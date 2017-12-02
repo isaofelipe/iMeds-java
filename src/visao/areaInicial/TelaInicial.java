@@ -5,7 +5,8 @@
  */
 package visao.areaInicial;
 
-import visao.areaCliente.ConsultarMedicamentos;
+import controle.areaInicial.TelaInicialControle;
+import visao.areaCliente.ConsultarMedicamentosVelho;
 
 /**
  *
@@ -40,6 +41,11 @@ public class TelaInicial extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButtonLogin.setText("Login");
+        jButtonLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonLoginMouseClicked(evt);
+            }
+        });
         jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLoginActionPerformed(evt);
@@ -57,6 +63,16 @@ public class TelaInicial extends javax.swing.JFrame {
         jLabel2.setText("Senha:");
 
         jButtonCadastro.setText("Cadastro");
+        jButtonCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonCadastroMouseClicked(evt);
+            }
+        });
+        jButtonCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCadastroActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel3.setText("iMeds");
@@ -123,10 +139,24 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordFieldSenhaActionPerformed
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
-        ConsultarMedicamentos consultarMedicamentos = new ConsultarMedicamentos();
+        ConsultarMedicamentosVelho consultarMedicamentos = new ConsultarMedicamentosVelho();
         consultarMedicamentos.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonLoginActionPerformed
+
+    private void jButtonCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCadastroActionPerformed
+
+    private void jButtonCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCadastroMouseClicked
+        EscolhaCadastro escolhaCadastro = new EscolhaCadastro();
+        escolhaCadastro.setVisible(true);
+    }//GEN-LAST:event_jButtonCadastroMouseClicked
+
+    private void jButtonLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonLoginMouseClicked
+        TelaInicialControle telaInicialControle = new TelaInicialControle(jTextFieldUsuario.getText(),jPasswordFieldSenha.getPassword()+"");
+        
+    }//GEN-LAST:event_jButtonLoginMouseClicked
 
     /**
      * @param args the command line arguments
