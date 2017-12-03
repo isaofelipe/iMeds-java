@@ -6,6 +6,8 @@
 package modelo;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,20 +19,17 @@ public class Medicamento {
     public String nome;
     public String descricao;
     public Boolean prescrito;
-    private Set<Farmacia> farmacia;
+    public List<FarmaciaMedicamento> listaFarmaciaMedicamento = new LinkedList<>();
     
     public Medicamento(){
-        this.farmacia = new HashSet<>();
     }
+    
     public void adicionarFarmaciaMedicamento(FarmaciaMedicamento farmaciaMedicamento){
-        this.getFarmaciaMedicamento().add(farmaciaMedicamento);
+        this.getListaFarmaciaMedicamento().add(farmaciaMedicamento);
     }
+    
     public void removerFarmaciaMedicamento(Farmacia farmaciaMedicamento){
-        this.getFarmaciaMedicamento().remove(farmaciaMedicamento);
-    }
-
-    public Set getFarmaciaMedicamento() {
-        return farmacia;
+        this.getListaFarmaciaMedicamento().remove(farmaciaMedicamento);
     }
 
     public int getIdMedicamento() {
@@ -63,5 +62,13 @@ public class Medicamento {
 
     public void setprescrito(Boolean prescrito) {
         this.prescrito = prescrito;
+    }
+
+    public List<FarmaciaMedicamento> getListaFarmaciaMedicamento() {
+        return listaFarmaciaMedicamento;
+    }
+
+    public void setListaFarmaciaMedicamento(List<FarmaciaMedicamento> listaFarmaciaMedicamento) {
+        this.listaFarmaciaMedicamento = listaFarmaciaMedicamento;
     }
 }

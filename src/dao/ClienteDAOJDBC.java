@@ -39,7 +39,7 @@ public class ClienteDAOJDBC extends DAOBaseJDBC implements ClienteDAO{
             }
         }
         catch(SQLException e) {
-            System.out.println("Erro sql" + e.getStackTrace());
+            System.out.println("Erro sql" + e.getMessage());
             return false;
         }
         return true;
@@ -64,7 +64,7 @@ public class ClienteDAOJDBC extends DAOBaseJDBC implements ClienteDAO{
             return id;
         }
         catch(SQLException e){
-            System.out.println("erro sql" + e.getStackTrace());
+            System.out.println("erro sql" + e.getMessage());
         }
         return 0;
     }

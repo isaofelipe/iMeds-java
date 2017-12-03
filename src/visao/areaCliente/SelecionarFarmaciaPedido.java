@@ -1,6 +1,15 @@
 package visao.areaCliente;
 
 import controle.areaCliente.ConsultarMedicamentosControle;
+import controle.areaCliente.SelecionarFarmaciaPedidoControle;
+import dao.FarmaciaDAOJDBC;
+import dao.FarmaciaMedicamentoDAOJDBC;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import javafx.util.Pair;
+import modelo.Farmacia;
+import modelo.FarmaciaMedicamento;
 import modelo.Medicamento;
 
 /*
@@ -17,7 +26,10 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     
     /** Creates new form ExemploJTable */
     public SelecionarFarmaciaPedido() {
-        
+        initComponents();
+    }
+    public SelecionarFarmaciaPedido(List<Pair<Medicamento, Integer>> medicamentosCarrinho) {
+        this.medicamentosQuantidadeCarrinho = medicamentosCarrinho;
         initComponents();
     }
     
@@ -32,20 +44,14 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         bAdd = new javax.swing.JPanel();
         pnTable = new javax.swing.JPanel();
         scrollTable = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
-        jButtonAdicionar = new javax.swing.JButton();
-        bDelete = new javax.swing.JButton();
+        tableOrcamentos = new javax.swing.JTable();
+        bSelecionarFarmacia = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jTextFieldNomeMedicamento = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonBuscar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        medicamentoDescricao = new javax.swing.JTextField();
-        jSpinnerQuantidade = new javax.swing.JSpinner();
-        jLabel3 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
+        scrollTable1 = new javax.swing.JScrollPane();
+        tableDetalhesPedido = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setTitle("Exemplo JTable imasters");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -59,99 +65,47 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         pnTable.setBorder(javax.swing.BorderFactory.createTitledBorder("Carrinho"));
         pnTable.setLayout(new java.awt.GridLayout(1, 0));
 
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        tableOrcamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "Descrição", "Prescrito", "Quantidade"
+                "Farmácia", "Orçamento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        table.getColumnModel().getColumn(0).setPreferredWidth(150);
-        table.getColumnModel().getColumn(0).setResizable(false);
-        table.getColumnModel().getColumn(1).setPreferredWidth(150);
-        table.getColumnModel().getColumn(1).setResizable(true);
-        table.getColumnModel().getColumn(2).setPreferredWidth(150);
-        table.getColumnModel().getColumn(2).setResizable(true);
-        table.getColumnModel().getColumn(3).setPreferredWidth(150);
-        table.getColumnModel().getColumn(3).setResizable(true);
-        table.getTableHeader().setReorderingAllowed(false);
-        table.setColumnSelectionAllowed(true);
-        scrollTable.setViewportView(table);
-        table.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tableOrcamentos.getColumnModel().getColumn(0).setPreferredWidth(150);
+        tableOrcamentos.getColumnModel().getColumn(0).setResizable(false);
+        tableOrcamentos.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tableOrcamentos.getColumnModel().getColumn(1).setResizable(true);
+        tableOrcamentos.getTableHeader().setReorderingAllowed(false);
+        tableOrcamentos.setColumnSelectionAllowed(true);
+        scrollTable.setViewportView(tableOrcamentos);
+        tableOrcamentos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         pnTable.add(scrollTable);
 
         bAdd.add(pnTable);
-        pnTable.setBounds(10, 230, 710, 260);
+        pnTable.setBounds(10, 10, 710, 290);
         pnTable.getAccessibleContext().setAccessibleDescription("");
 
-        jButtonAdicionar.setText("Adicionar ao carrinho");
-        jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
+        bSelecionarFarmacia.setText("Selecionar Farmácia");
+        bSelecionarFarmacia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAdicionarActionPerformed(evt);
+                bSelecionarFarmaciaActionPerformed(evt);
             }
         });
-        bAdd.add(jButtonAdicionar);
-        jButtonAdicionar.setBounds(10, 180, 220, 23);
-
-        bDelete.setText("Remover Item");
-        bDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bDeleteActionPerformed(evt);
-            }
-        });
-        bAdd.add(bDelete);
-        bDelete.setBounds(730, 450, 130, 30);
+        bAdd.add(bSelecionarFarmacia);
+        bSelecionarFarmacia.setBounds(730, 250, 150, 40);
         bAdd.add(jPanel1);
         jPanel1.setBounds(280, 280, 10, 10);
-
-        jTextFieldNomeMedicamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNomeMedicamentoActionPerformed(evt);
-            }
-        });
-        bAdd.add(jTextFieldNomeMedicamento);
-        jTextFieldNomeMedicamento.setBounds(10, 30, 710, 22);
-
-        jLabel1.setText("Nome Medicamento");
-        bAdd.add(jLabel1);
-        jLabel1.setBounds(10, 10, 113, 16);
-
-        jButtonBuscar.setText("Buscar");
-        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBuscarActionPerformed(evt);
-            }
-        });
-        bAdd.add(jButtonBuscar);
-        jButtonBuscar.setBounds(10, 60, 110, 25);
-
-        jLabel2.setText("Descrição do Medicamento:");
-        bAdd.add(jLabel2);
-        jLabel2.setBounds(10, 100, 158, 16);
-        bAdd.add(medicamentoDescricao);
-        medicamentoDescricao.setBounds(10, 120, 710, 22);
-
-        jSpinnerQuantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, 30, 1));
-        bAdd.add(jSpinnerQuantidade);
-        jSpinnerQuantidade.setBounds(80, 150, 45, 22);
-
-        jLabel3.setText("Quantidade:");
-        bAdd.add(jLabel3);
-        jLabel3.setBounds(10, 150, 70, 16);
-        bAdd.add(jSeparator1);
-        jSeparator1.setBounds(0, 90, 890, 10);
-        bAdd.add(jSeparator2);
-        jSeparator2.setBounds(0, 210, 880, 10);
 
         jButton1.setText("Fechar Pedido");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -160,43 +114,65 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
             }
         });
         bAdd.add(jButton1);
-        jButton1.setBounds(20, 510, 160, 40);
+        jButton1.setBounds(20, 720, 160, 40);
+
+        scrollTable1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalhes do Pedido"));
+
+        tableDetalhesPedido.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Medicamento", "Preço Unitário", "Quantidade", "Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Double.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        scrollTable1.setViewportView(tableDetalhesPedido);
+        tableDetalhesPedido.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        bAdd.add(scrollTable1);
+        scrollTable1.setBounds(20, 320, 690, 250);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel1.setText("Algum dos Medicamentos do Pedido necessitam de receita médica. Favor enviar a receita digitalizada:");
+        jPanel2.add(jLabel1);
+
+        bAdd.add(jPanel2);
+        jPanel2.setBounds(30, 580, 680, 120);
 
         getContentPane().add(bAdd, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(899, 611));
+        setSize(new java.awt.Dimension(911, 822));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
+    private void bSelecionarFarmaciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSelecionarFarmaciaActionPerformed
         // TODO add your handling code here:
-        int[] l = table.getSelectedRows();
-        javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)table.getModel();
-
-        for(int i = (l.length-1); i >= 0; --i)
-            dtm.removeRow(l[i]);
-    }//GEN-LAST:event_bDeleteActionPerformed
-
-    private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
-        javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)table.getModel();
-        dtm.addRow(new Object[]{medicamento.nome,medicamento.descricao,medicamento.prescrito,jSpinnerQuantidade.getValue()});
-    }//GEN-LAST:event_jButtonAdicionarActionPerformed
+        int l = tableOrcamentos.getSelectedRow();
+        farmaciaSelecionada = new FarmaciaDAOJDBC().buscarPorNome(tableOrcamentos.getModel().getValueAt(0, l).toString());
+        javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)tableDetalhesPedido.getModel();
+        listaFarmaciaMedicamento.clear();
+        dtm.setRowCount(0);
+        for (Pair<Medicamento, Integer> medicamentosQuantidade : medicamentosQuantidadeCarrinho)
+        {
+            FarmaciaMedicamento farmaciaMedicamento = new FarmaciaMedicamentoDAOJDBC().buscarPorIds(medicamentosQuantidade.getKey().getIdMedicamento(), farmaciaSelecionada.getIdFarmacia());
+            listaFarmaciaMedicamento.add(farmaciaMedicamento);
+            dtm.addRow(new Object[]{medicamentosQuantidade.getKey().getNome(), farmaciaMedicamento.getPreco(), medicamentosQuantidade.getValue(), farmaciaMedicamento.getPreco()*medicamentosQuantidade.getValue()});
+        }
+    }//GEN-LAST:event_bSelecionarFarmaciaActionPerformed
     
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         System.exit(0);
     }//GEN-LAST:event_exitForm
-
-    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        medicamento = new ConsultarMedicamentosControle().buscarMedicamento(jTextFieldNomeMedicamento.getText());
-        if (medicamento != null){
-            medicamentoDescricao.setText(medicamento.getNome() + " | " + medicamento.getDescricao() + " | " + medicamento.getprescrito());
-        }
-    }//GEN-LAST:event_jButtonBuscarActionPerformed
-
-    private void jTextFieldNomeMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeMedicamentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNomeMedicamentoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -209,26 +185,32 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         new SelecionarFarmaciaPedido().show();
     }
     
-    private javax.swing.JComboBox scmbSexo;
     private Medicamento medicamento;
+    private List<Pair<Medicamento, Integer>> medicamentosQuantidadeCarrinho;
+    private List<FarmaciaMedicamento> listaFarmaciaMedicamento = new LinkedList<>();
+    private Farmacia farmaciaSelecionada = null;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bAdd;
-    private javax.swing.JButton bDelete;
+    private javax.swing.JButton bSelecionarFarmacia;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonAdicionar;
-    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSpinner jSpinnerQuantidade;
-    private javax.swing.JTextField jTextFieldNomeMedicamento;
-    private javax.swing.JTextField medicamentoDescricao;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel pnTable;
     private javax.swing.JScrollPane scrollTable;
-    private javax.swing.JTable table;
+    private javax.swing.JScrollPane scrollTable1;
+    private javax.swing.JTable tableDetalhesPedido;
+    private javax.swing.JTable tableOrcamentos;
     // End of variables declaration//GEN-END:variables
+
+    void carregar() {
+        Map<String, Double> orcamentos = new SelecionarFarmaciaPedidoControle().obterOrcamentos(medicamentosQuantidadeCarrinho);
+        javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)tableOrcamentos.getModel();
+        for (Map.Entry<String, Double> orcamento : orcamentos.entrySet())
+        {
+            dtm.addRow(new Object[]{orcamento.getKey(), orcamento.getValue()});
+        }
+    }
     
 }

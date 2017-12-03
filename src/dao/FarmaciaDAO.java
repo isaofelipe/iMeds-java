@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.List;
 import modelo.Farmacia;
 
 /**
@@ -13,4 +14,9 @@ import modelo.Farmacia;
  */
 public interface FarmaciaDAO {
     public boolean salvarFarmacia(Farmacia farmacia);
+    
+    public List<Farmacia> buscarTodas();
+    
+    public Farmacia buscarPorId(int idFarmacia);
+    public Farmacia buscarPorNome(String nome);
 }

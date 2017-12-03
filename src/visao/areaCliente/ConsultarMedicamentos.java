@@ -3,6 +3,7 @@ package visao.areaCliente;
 import controle.areaCliente.ConsultarMedicamentosControle;
 import java.util.LinkedList;
 import java.util.List;
+import javafx.util.Pair;
 import modelo.Medicamento;
 
 /*
@@ -42,7 +43,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButtonBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        medicamentoDescricao = new javax.swing.JTextField();
+        jTextFieldMedicamentoDescricao = new javax.swing.JTextField();
         jSpinnerQuantidade = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -94,7 +95,6 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
 
         bAdd.add(pnTable);
         pnTable.setBounds(10, 230, 710, 260);
-        pnTable.getAccessibleContext().setAccessibleName("Carrinho");
         pnTable.getAccessibleContext().setAccessibleDescription("");
 
         jButtonAdicionar.setText("Adicionar ao carrinho");
@@ -146,8 +146,8 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         jLabel2.setText("Descrição do Medicamento:");
         bAdd.add(jLabel2);
         jLabel2.setBounds(10, 100, 158, 16);
-        bAdd.add(medicamentoDescricao);
-        medicamentoDescricao.setBounds(10, 120, 710, 22);
+        bAdd.add(jTextFieldMedicamentoDescricao);
+        jTextFieldMedicamentoDescricao.setBounds(10, 120, 710, 22);
 
         jSpinnerQuantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, 30, 1));
         bAdd.add(jSpinnerQuantidade);
@@ -185,21 +185,21 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         {
             Object nome = table.getModel().getValueAt(l[i], 0).toString();
             dtm.removeRow(l[i]);
-            for (Medicamento m : medicamentosCarrinho)
+            for (Pair<Medicamento, Integer> m : medicamentosQuantidadeCarrinho)
             {
-                if (m.nome.equals(nome))
-                    medicamentosCarrinho.remove(m);
+                if (m.getKey().nome.equals(nome))
+                    medicamentosQuantidadeCarrinho.remove(m);
             }
         }
     }//GEN-LAST:event_bDeleteActionPerformed
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)table.getModel();
-        if (jTextFieldMedicamentoBuscado != null){
-            dtm.addRow(new Object[]{jTextFieldMedicamentoBuscado.nome,jTextFieldMedicamentoBuscado.descricao,jTextFieldMedicamentoBuscado.prescrito,jSpinnerQuantidade.getValue()});
-            medicamentosCarrinho.add(jTextFieldMedicamentoBuscado);
-            medicamentoDescricao.setText("");
-            jTextFieldMedicamentoBuscado = null;
+        if (medicamentoBuscado != null){
+            dtm.addRow(new Object[]{medicamentoBuscado.nome,medicamentoBuscado.descricao,medicamentoBuscado.prescrito,jSpinnerQuantidade.getValue()});
+            medicamentosQuantidadeCarrinho.add(new Pair<Medicamento, Integer>(medicamentoBuscado, (Integer)jSpinnerQuantidade.getValue()));
+            jTextFieldMedicamentoDescricao.setText("");
+            medicamentoBuscado = null;
         }
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
     
@@ -209,9 +209,12 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_exitForm
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        jTextFieldMedicamentoBuscado = new ConsultarMedicamentosControle().buscarMedicamento(jTextFieldNomeMedicamento.getText());
-        if (jTextFieldMedicamentoBuscado != null){
-            medicamentoDescricao.setText(jTextFieldMedicamentoBuscado.getNome() + " | " + jTextFieldMedicamentoBuscado.getDescricao() + " | " + jTextFieldMedicamentoBuscado.getprescrito());
+        medicamentoBuscado = new ConsultarMedicamentosControle().buscarMedicamento(jTextFieldNomeMedicamento.getText());
+        if (medicamentoBuscado != null){
+            jTextFieldMedicamentoDescricao.setText(medicamentoBuscado.getNome() + " | " + medicamentoBuscado.getDescricao() + " | " + medicamentoBuscado.getprescrito());
+        }
+        else{
+            
         }
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
@@ -221,12 +224,17 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
 
     private void jButtonFecharPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharPedidoActionPerformed
         this.setVisible(false);
-        
+        if (medicamentosQuantidadeCarrinho.size() > 0)
+        {
+            SelecionarFarmaciaPedido selecionarFarmaciaPedido = new SelecionarFarmaciaPedido(medicamentosQuantidadeCarrinho);
+            selecionarFarmaciaPedido.carregar();
+            selecionarFarmaciaPedido.setVisible(true);
+        }
     }//GEN-LAST:event_jButtonFecharPedidoActionPerformed
 
     private void jTextFieldNomeMedicamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldNomeMedicamentoMouseClicked
-        medicamentoDescricao.setText("");
-        jTextFieldMedicamentoBuscado = null;
+        jTextFieldMedicamentoDescricao.setText("");
+        medicamentoBuscado = null;
     }//GEN-LAST:event_jTextFieldNomeMedicamentoMouseClicked
     
     /**
@@ -236,9 +244,8 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         new ConsultarMedicamentos().show();
     }
     
-    private javax.swing.JComboBox scmbSexo;
-    private Medicamento jTextFieldMedicamentoBuscado = null;
-    private List<Medicamento> medicamentosCarrinho = new LinkedList<>();
+    private Medicamento medicamentoBuscado = null;
+    private List<Pair<Medicamento, Integer>> medicamentosQuantidadeCarrinho = new LinkedList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bAdd;
     private javax.swing.JButton bDelete;
@@ -252,8 +259,8 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSpinner jSpinnerQuantidade;
+    private javax.swing.JTextField jTextFieldMedicamentoDescricao;
     private javax.swing.JTextField jTextFieldNomeMedicamento;
-    private javax.swing.JTextField medicamentoDescricao;
     private javax.swing.JPanel pnTable;
     private javax.swing.JScrollPane scrollTable;
     private javax.swing.JTable table;

@@ -62,4 +62,29 @@ public class MedicamentoDAOJDBC extends DAOBaseJDBC implements MedicamentoDAO{
             return null;
         }
     }
+
+    @Override
+    public Medicamento buscarPorId(int idMedicamento) {
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT idMedicamento, nome, descricao, prescrito FROM Medicamento WHERE idMedicamento = ?");
+            stmt.setInt(1, idMedicamento);
+            ResultSet rset = stmt.executeQuery();
+            Medicamento medicamento = new Medicamento();
+            if (rset.next()){
+                medicamento.setIdMedicamento(rset.getInt("idMedicamento"));
+                medicamento.setNome(rset.getString("nome"));
+                medicamento.setDescricao(rset.getString("descricao"));
+                medicamento.setprescrito(rset.getBoolean("prescrito"));
+                return medicamento;
+            }
+            else{
+                return null;
+            }
+            
+        }
+        catch(SQLException e){
+            System.out.println("Erro de sql" + e.getMessage());
+            return null;
+        }
+    }
 }

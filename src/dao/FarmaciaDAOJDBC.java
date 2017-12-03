@@ -8,6 +8,8 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import modelo.Farmacia;
 import tools.DAOBaseJDBC;
 
@@ -38,7 +40,7 @@ public class FarmaciaDAOJDBC extends DAOBaseJDBC implements FarmaciaDAO{
             }
         }
         catch(SQLException e){
-            System.out.println("Erro sql" + e.getStackTrace());
+            System.out.println("Erro sql" + e.getMessage());
             return false;
         }
         return true;
@@ -63,8 +65,80 @@ public class FarmaciaDAOJDBC extends DAOBaseJDBC implements FarmaciaDAO{
             return id;
         }
         catch(SQLException e){
-            System.out.println("erro sql" + e.getStackTrace());
+            System.out.println("erro sql" + e.getMessage());
         }
         return 0;
+    }
+
+    @Override
+    public List<Farmacia> buscarTodas() {
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT idFarmacia, nome, CNPJ, endereco, telefone FROM Farmacia");
+            ResultSet rset = stmt.executeQuery();
+            ArrayList<Farmacia> listaFarmacias = new ArrayList<>();
+            while (rset.next()){
+                Farmacia farmacia = new Farmacia();
+                farmacia.setIdFarmacia(rset.getInt("idFarmacia"));
+                farmacia.setNome(rset.getString("nome"));
+                farmacia.setCNPJ(rset.getString("CNPJ"));
+                farmacia.setEndereco(rset.getString("endereco"));
+                farmacia.setTelefone("telefone");
+                listaFarmacias.add(farmacia);
+            }
+            return listaFarmacias;
+        }
+        catch(SQLException e){
+            System.out.println("Erro de sql" + e.getMessage());
+            return null;
+        }
+    }
+    
+    public Farmacia buscarPorId(int idFarmacia){
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT idFarmacia, nome, CNPJ, endereco, telefone FROM Farmacia WHERE idFarmacia = ?");
+            stmt.setInt(1, idFarmacia);
+            ResultSet rset = stmt.executeQuery();
+            Farmacia farmacia = new Farmacia();
+            if (rset.next()){
+                farmacia.setCNPJ(rset.getString("CNPJ"));
+                farmacia.setEndereco(rset.getString("endereco"));
+                farmacia.setIdFarmacia(idFarmacia);
+                farmacia.setNome(rset.getString("nome"));
+                farmacia.setTelefone(rset.getString("telefone"));
+                return farmacia;
+            }
+            else{
+                return null;
+            }
+            
+        }
+        catch(SQLException e){
+            System.out.println("Erro de sql" + e.getMessage());
+            return null;
+        }
+    }
+    
+    public Farmacia buscarPorNome(String nome){
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT idFarmacia, nome, CNPJ, endereco, telefone FROM Farmacia WHERE nome = ?");
+            stmt.setString(1, nome);
+            ResultSet rset = stmt.executeQuery();
+            Farmacia farmacia = new Farmacia();
+            if (rset.next()){
+                farmacia.setCNPJ(rset.getString("CNPJ"));
+                farmacia.setEndereco(rset.getString("endereco"));
+                farmacia.setIdFarmacia(rset.getInt("idFarmacia"));
+                farmacia.setNome(rset.getString("nome"));
+                farmacia.setTelefone(rset.getString("telefone"));
+                return farmacia;
+            }
+            else{
+                return null;
+            }
+        }
+        catch(SQLException e){
+            System.out.println("Erro de sql" + e.getMessage());
+            return null;
+        }
     }
 }

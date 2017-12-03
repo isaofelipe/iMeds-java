@@ -3,9 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Isao%20Felipe%20Morigaki/Desktop/iMeds/iMeds-java-master/src/dao/FarmaciaMedicamentoDAOJDBC.java</file>
+            <file>file:/C:/Users/Isao%20Felipe%20Morigaki/Desktop/iMeds/iMeds-java-master/src/modelo/FarmaciaMedicamento.java</file>
             <file>file:/C:/Users/Isao%20Felipe%20Morigaki/Desktop/iMeds/iMeds-java-master/src/visao/areaCliente/ConsultarMedicamentos.java</file>
+            <file>file:/C:/Users/Isao%20Felipe%20Morigaki/Desktop/iMeds/iMeds-java-master/src/dao/FarmaciaMedicamentoDAO.java</file>
             <file>file:/C:/Users/Isao%20Felipe%20Morigaki/Desktop/iMeds/iMeds-java-master/src/dao/MedicamentoDAOJDBC.java</file>
-            <file>file:/C:/Users/Isao%20Felipe%20Morigaki/Desktop/iMeds/iMeds-java-master/src/tools/Sessao.java</file>
+            <file>file:/C:/Users/Isao%20Felipe%20Morigaki/Desktop/iMeds/iMeds-java-master/src/controle/areaCliente/SelecionarFarmaciaPedidoControle.java</file>
+            <file>file:/C:/Users/Isao%20Felipe%20Morigaki/Desktop/iMeds/iMeds-java-master/src/dao/FarmaciaDAO.java</file>
+            <file>file:/C:/Users/Isao%20Felipe%20Morigaki/Desktop/iMeds/iMeds-java-master/src/dao/FarmaciaDAOJDBC.java</file>
             <file>file:/C:/Users/Isao%20Felipe%20Morigaki/Desktop/iMeds/iMeds-java-master/src/visao/areaCliente/SelecionarFarmaciaPedido.java</file>
         </group>
     </open-files>

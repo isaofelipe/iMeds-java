@@ -15,6 +15,9 @@ public class FarmaciaMedicamento {
     public Farmacia farmacia;
     public Medicamento medicamento;
 
+    public FarmaciaMedicamento() {
+    }
+
     public FarmaciaMedicamento(float preco, int quantEstoque, Farmacia farmacia, Medicamento medicamento) {
         this.preco = preco;
         this.quantEstoque = quantEstoque;
