@@ -227,7 +227,6 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         if (medicamentosQuantidadeCarrinho.size() > 0)
         {
             SelecionarFarmaciaPedido selecionarFarmaciaPedido = new SelecionarFarmaciaPedido(medicamentosQuantidadeCarrinho);
-            selecionarFarmaciaPedido.carregar();
             selecionarFarmaciaPedido.setVisible(true);
         }
     }//GEN-LAST:event_jButtonFecharPedidoActionPerformed

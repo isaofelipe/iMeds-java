@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import javafx.util.Pair;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import modelo.Farmacia;
 import modelo.FarmaciaMedicamento;
 import modelo.Medicamento;
@@ -30,10 +32,12 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     /** Creates new form ExemploJTable */
     public SelecionarFarmaciaPedido() {
         initComponents();
+        carregar();
     }
     public SelecionarFarmaciaPedido(List<Pair<Medicamento, Integer>> medicamentosCarrinho) {
         this.medicamentosQuantidadeCarrinho = medicamentosCarrinho;
         initComponents();
+        carregar();
     }
     
     /** This method is called from within the constructor to
@@ -51,7 +55,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         tableOrcamentos = new javax.swing.JTable();
         bSelecionarFarmacia = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jButtonFecharPedido = new javax.swing.JButton();
         scrollTable1 = new javax.swing.JScrollPane();
         tableDetalhesPedido = new javax.swing.JTable();
         jPanelEnviarReceita = new javax.swing.JPanel();
@@ -114,14 +118,14 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         bAdd.add(jPanel1);
         jPanel1.setBounds(280, 280, 10, 10);
 
-        jButton1.setText("Fechar Pedido");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonFecharPedido.setText("Fechar Pedido");
+        jButtonFecharPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonFecharPedidoActionPerformed(evt);
             }
         });
-        bAdd.add(jButton1);
-        jButton1.setBounds(20, 720, 160, 40);
+        bAdd.add(jButtonFecharPedido);
+        jButtonFecharPedido.setBounds(20, 720, 160, 40);
 
         scrollTable1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalhes do Pedido"));
 
@@ -149,6 +153,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
 
         jPanelEnviarReceita.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanelEnviarReceita.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanelEnviarReceita.setVisible(false);
 
         jLabel1.setText("Algum dos Medicamentos do Pedido necessitam de receita médica. Favor enviar a receita digitalizada:");
 
@@ -212,14 +217,16 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitForm
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButtonFecharPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharPedidoActionPerformed
+        if (farmaciaSelecionada != null && arquivo != null){
+            JOptionPane.showMessageDialog(null, "Compra realizada com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE, UIManager.getIcon("OptionPane.informationIcon"));
+        }
+    }//GEN-LAST:event_jButtonFecharPedidoActionPerformed
 
     private void buttonEnviarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEnviarReceitaActionPerformed
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
+            arquivo = fileChooser.getSelectedFile();
         } else {
             System.out.println("File access cancelled by user.");
         }
@@ -236,13 +243,14 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     private List<Pair<Medicamento, Integer>> medicamentosQuantidadeCarrinho;
     private List<FarmaciaMedicamento> listaFarmaciaMedicamento = new LinkedList<>();
     private Farmacia farmaciaSelecionada = null;
+    private File arquivo = null;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bAdd;
     private javax.swing.JButton bSelecionarFarmacia;
     private java.awt.Button buttonEnviarReceita;
     private javax.swing.JFileChooser fileChooser;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonFecharPedido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelEnviarReceita;
@@ -252,7 +260,6 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     private javax.swing.JTable tableDetalhesPedido;
     private javax.swing.JTable tableOrcamentos;
     // End of variables declaration//GEN-END:variables
-
     void carregar() {
         Map<String, Double> orcamentos = new SelecionarFarmaciaPedidoControle().obterOrcamentos(medicamentosQuantidadeCarrinho);
         javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)tableOrcamentos.getModel();
@@ -260,6 +267,10 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         {
             dtm.addRow(new Object[]{orcamento.getKey(), orcamento.getValue()});
         }
+        for (Pair<Medicamento, Integer> medicamentoQuantidade : medicamentosQuantidadeCarrinho){
+            if (medicamentoQuantidade.getKey().getprescrito()){
+                jPanelEnviarReceita.setVisible(true);
+            }
+        }
     }
-    
 }
