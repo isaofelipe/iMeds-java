@@ -44,7 +44,7 @@ public class VisaoPedido extends javax.swing.JFrame {
 
             },
             new String [] {
-
+                "Título 1"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
