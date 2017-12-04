@@ -20,23 +20,28 @@ import tools.Sessao;
  */
 public class PedidoDAOJDBC  extends DAOBaseJDBC implements PedidoDAO {
 
-    public List<Pedido> buscarPedidosPorFarmaciaLogada(){
-    try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT idPedido, data, imagemReceita, idFarmacia, idCliente FROM Pedido WHERE idPedido = ?");
-            stmt.setInt(1, Sessao.farmciaLogada.getIdFarmacia());
+    public List<Pedido> buscarPedidosPorFarmaciaLogada()
+    {
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT idPedido, data, imagemReceita, idFarmacia, idCliente FROM Pedido WHERE idCliente = ?");
+            stmt.setInt(1, Sessao.clienteLogado.getIdCliente());
             ResultSet rset = stmt.executeQuery();
             List<Pedido> listaPedidos = new ArrayList<>();
             while (rset.next()){
                 Pedido pedido = new Pedido();
-                pedido.setIdPedido(rset.getInt("idPedido"));
-                pedido.setData(rset.getString("data"));
-                pedido.setImagemReceita(rset.getString("imagemReceita"));
-                pedido.setIdFarmacia(rset.getString("idFarmacia"));
-                pedido.setIdCliente("idCliente");
+                pedido.setCliente(Sessao.clienteLogado);
+                pedido.setData(rset.getDate("data"));
+                pedido.setEstado(rset.getInt("estado"));
+                pedido.setFarmacia(new FarmaciaDAOJDBC().buscarPorId(rset.getInt("idFarmacia")));
+                pedido.setIdPedido(rset.getInt("idFarmacia"));
                 listaPedidos.add(pedido);
             }
             return listaPedidos;
-    }
+        }
+        catch(SQLException e){
+            System.out.println("Erro de sql" + e.getMessage());
+            return null;
+        }
     }
 
     public List<Pedido> buscarPedidosDoClienteLogado()
@@ -47,15 +52,15 @@ public class PedidoDAOJDBC  extends DAOBaseJDBC implements PedidoDAO {
             ResultSet rset = stmt.executeQuery();
             List<Pedido> listaPedidos = new ArrayList<>();
             while (rset.next()){
-                Farmacia farmacia = new Farmacia();
-                farmacia.setIdFarmacia(rset.getInt("idFarmacia"));
-                farmacia.setNome(rset.getString("nome"));
-                farmacia.setCNPJ(rset.getString("CNPJ"));
-                farmacia.setEndereco(rset.getString("endereco"));
-                farmacia.setTelefone("telefone");
-                listaFarmacias.add(farmacia);
+                Pedido pedido = new Pedido();
+                pedido.setCliente(Sessao.clienteLogado);
+                pedido.setData(rset.getDate("data"));
+                pedido.setEstado(rset.getInt("estado"));
+                pedido.setFarmacia(new FarmaciaDAOJDBC().buscarPorId(rset.getInt("idFarmacia")));
+                pedido.setIdPedido(rset.getInt("idFarmacia"));
+                listaPedidos.add(pedido);
             }
-            return listaFarmacias;
+            return listaPedidos;
         }
         catch(SQLException e){
             System.out.println("Erro de sql" + e.getMessage());

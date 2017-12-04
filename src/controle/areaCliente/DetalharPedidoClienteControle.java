@@ -5,18 +5,16 @@
  */
 package controle.areaCliente;
 
-import dao.PedidoDAOJDBC;
 import java.util.List;
-import modelo.Pedido;
+import modelo.ItemPedido;
 
 /**
  *
  * @author Isao Felipe Morigaki
  */
-public class ConsultarPedidosClienteControle {
-
-    public List<Pedido> listarPedidos() {
-        return new PedidoDAOJDBC().buscarPedidosDoClienteLogado();
+public class DetalharPedidoClienteControle {
+    public List<ItemPedido> listarItensPedido(int idPedido)
+    {
+        
     }
-    
 }

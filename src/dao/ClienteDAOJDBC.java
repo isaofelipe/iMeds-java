@@ -68,5 +68,30 @@ public class ClienteDAOJDBC extends DAOBaseJDBC implements ClienteDAO{
         }
         return 0;
     }
+    
+    public Cliente buscarClientePorId(int id){
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT idCliente, nome, CPF, endereco, telefone FROM Cliente WHERE idCliente = ?");
+            stmt.setInt(1, id);
+            ResultSet rset = stmt.executeQuery();
+            Cliente cliente = new Cliente();
+            if (rset.next()){
+                cliente.setCPF(rset.getString("CPF"));
+                cliente.setEndereco(rset.getString("endereco"));
+                cliente.setIdCliente(id);
+                cliente.setNome(rset.getString("nome"));
+                cliente.setTelefone(rset.getString("telefone"));
+                return cliente;
+            }
+            else{
+                return null;
+            }
+            
+        }
+        catch(SQLException e){
+            System.out.println("Erro de sql" + e.getMessage());
+            return null;
+        }
+    }
 }
 
