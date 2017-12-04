@@ -18,7 +18,6 @@ import tools.Sessao;
  *
  * @author alunodev06
  */
-<<<<<<< HEAD
 public class PedidoDAOJDBC  extends DAOBaseJDBC implements PedidoDAO {
 
     public List<Pedido> buscarPedidosPorFarmaciaLogada(){
@@ -37,8 +36,9 @@ public class PedidoDAOJDBC  extends DAOBaseJDBC implements PedidoDAO {
                 listaPedidos.add(pedido);
             }
             return listaPedidos;
-=======
-public class PedidoDAOJDBC extends DAOBaseJDBC implements PedidoDAO{
+    }
+    }
+
     public List<Pedido> buscarPedidosDoClienteLogado()
     {
         try{
@@ -56,15 +56,10 @@ public class PedidoDAOJDBC extends DAOBaseJDBC implements PedidoDAO{
                 listaFarmacias.add(farmacia);
             }
             return listaFarmacias;
->>>>>>> ba599eb1845a1af9f8c7ee7ac4b95ee5dc965812
         }
         catch(SQLException e){
             System.out.println("Erro de sql" + e.getMessage());
             return null;
         }
-<<<<<<< HEAD
-    
-=======
     }
->>>>>>> ba599eb1845a1af9f8c7ee7ac4b95ee5dc965812
 }
