@@ -5,10 +5,13 @@
  */
 package dao;
 
+import java.util.List;
+import modelo.Pedido;
+
 /**
  *
  * @author alunodev06
  */
 public interface PedidoDAO {
-    
+    public List<Pedido> buscarPedidosDoClienteLogado();
 }
