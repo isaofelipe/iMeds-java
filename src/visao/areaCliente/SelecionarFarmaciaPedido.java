@@ -4,10 +4,13 @@ import controle.areaCliente.ConsultarMedicamentosControle;
 import controle.areaCliente.SelecionarFarmaciaPedidoControle;
 import dao.FarmaciaDAOJDBC;
 import dao.FarmaciaMedicamentoDAOJDBC;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javafx.util.Pair;
+import javax.swing.JFileChooser;
 import modelo.Farmacia;
 import modelo.FarmaciaMedicamento;
 import modelo.Medicamento;
@@ -41,6 +44,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fileChooser = new javax.swing.JFileChooser();
         bAdd = new javax.swing.JPanel();
         pnTable = new javax.swing.JPanel();
         scrollTable = new javax.swing.JScrollPane();
@@ -50,8 +54,11 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         scrollTable1 = new javax.swing.JScrollPane();
         tableDetalhesPedido = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
+        jPanelEnviarReceita = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        buttonEnviarReceita = new java.awt.Button();
+
+        fileChooser.setDialogTitle("Selecione o arquivo da receita");
 
         setTitle("Exemplo JTable imasters");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -140,13 +147,44 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         bAdd.add(scrollTable1);
         scrollTable1.setBounds(20, 320, 690, 250);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelEnviarReceita.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelEnviarReceita.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setText("Algum dos Medicamentos do Pedido necessitam de receita médica. Favor enviar a receita digitalizada:");
-        jPanel2.add(jLabel1);
 
-        bAdd.add(jPanel2);
-        jPanel2.setBounds(30, 580, 680, 120);
+        buttonEnviarReceita.setLabel("Enviar Receita");
+        buttonEnviarReceita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEnviarReceitaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelEnviarReceitaLayout = new javax.swing.GroupLayout(jPanelEnviarReceita);
+        jPanelEnviarReceita.setLayout(jPanelEnviarReceitaLayout);
+        jPanelEnviarReceitaLayout.setHorizontalGroup(
+            jPanelEnviarReceitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelEnviarReceitaLayout.createSequentialGroup()
+                .addGroup(jPanelEnviarReceitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelEnviarReceitaLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanelEnviarReceitaLayout.createSequentialGroup()
+                        .addGap(280, 280, 280)
+                        .addComponent(buttonEnviarReceita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(77, 77, 77))
+        );
+        jPanelEnviarReceitaLayout.setVerticalGroup(
+            jPanelEnviarReceitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelEnviarReceitaLayout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonEnviarReceita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        bAdd.add(jPanelEnviarReceita);
+        jPanelEnviarReceita.setBounds(30, 580, 680, 120);
 
         getContentPane().add(bAdd, java.awt.BorderLayout.CENTER);
 
@@ -177,6 +215,15 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void buttonEnviarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEnviarReceitaActionPerformed
+        int returnVal = fileChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+    }//GEN-LAST:event_buttonEnviarReceitaActionPerformed
     
     /**
      * @param args the command line arguments
@@ -193,10 +240,12 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bAdd;
     private javax.swing.JButton bSelecionarFarmacia;
+    private java.awt.Button buttonEnviarReceita;
+    private javax.swing.JFileChooser fileChooser;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelEnviarReceita;
     private javax.swing.JPanel pnTable;
     private javax.swing.JScrollPane scrollTable;
     private javax.swing.JScrollPane scrollTable1;
