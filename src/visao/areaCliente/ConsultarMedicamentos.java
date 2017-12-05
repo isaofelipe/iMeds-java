@@ -43,14 +43,20 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         jTextFieldNomeMedicamento = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButtonBuscar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jTextFieldMedicamentoDescricao = new javax.swing.JTextField();
         jSpinnerQuantidade = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jButtonFecharPedido = new javax.swing.JButton();
         jButtonVoltar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabelNome = new javax.swing.JLabel();
+        jLabelDescricao = new javax.swing.JLabel();
+        jLabelPrescrito = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setTitle("Exemplo JTable imasters");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -96,7 +102,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         pnTable.add(scrollTable);
 
         bAdd.add(pnTable);
-        pnTable.setBounds(10, 230, 710, 260);
+        pnTable.setBounds(20, 320, 710, 260);
         pnTable.getAccessibleContext().setAccessibleDescription("");
 
         jButtonAdicionar.setText("Adicionar ao carrinho");
@@ -106,7 +112,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
             }
         });
         bAdd.add(jButtonAdicionar);
-        jButtonAdicionar.setBounds(10, 180, 220, 23);
+        jButtonAdicionar.setBounds(10, 280, 220, 23);
 
         bDelete.setText("Remover Item");
         bDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -115,9 +121,9 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
             }
         });
         bAdd.add(bDelete);
-        bDelete.setBounds(730, 450, 130, 30);
+        bDelete.setBounds(740, 540, 130, 30);
         bAdd.add(jPanel1);
-        jPanel1.setBounds(280, 280, 10, 10);
+        jPanel1.setBounds(280, 230, 10, 10);
 
         jTextFieldNomeMedicamento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -130,11 +136,11 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
             }
         });
         bAdd.add(jTextFieldNomeMedicamento);
-        jTextFieldNomeMedicamento.setBounds(10, 30, 710, 20);
+        jTextFieldNomeMedicamento.setBounds(10, 70, 710, 20);
 
         jLabel1.setText("Nome Medicamento");
         bAdd.add(jLabel1);
-        jLabel1.setBounds(10, 10, 93, 14);
+        jLabel1.setBounds(10, 50, 120, 14);
 
         jButtonBuscar.setText("Buscar");
         jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -143,25 +149,19 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
             }
         });
         bAdd.add(jButtonBuscar);
-        jButtonBuscar.setBounds(10, 60, 110, 23);
-
-        jLabel2.setText("Descrição do Medicamento:");
-        bAdd.add(jLabel2);
-        jLabel2.setBounds(10, 100, 131, 14);
-        bAdd.add(jTextFieldMedicamentoDescricao);
-        jTextFieldMedicamentoDescricao.setBounds(10, 120, 710, 20);
+        jButtonBuscar.setBounds(10, 100, 110, 23);
 
         jSpinnerQuantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, 30, 1));
         bAdd.add(jSpinnerQuantidade);
-        jSpinnerQuantidade.setBounds(80, 150, 39, 20);
+        jSpinnerQuantidade.setBounds(80, 250, 39, 20);
 
         jLabel3.setText("Quantidade:");
         bAdd.add(jLabel3);
-        jLabel3.setBounds(10, 150, 60, 14);
+        jLabel3.setBounds(10, 250, 80, 14);
         bAdd.add(jSeparator1);
-        jSeparator1.setBounds(0, 90, 890, 10);
+        jSeparator1.setBounds(0, 130, 890, 10);
         bAdd.add(jSeparator2);
-        jSeparator2.setBounds(0, 210, 880, 10);
+        jSeparator2.setBounds(0, 310, 880, 10);
 
         jButtonFecharPedido.setText("Fechar Pedido");
         jButtonFecharPedido.addActionListener(new java.awt.event.ActionListener() {
@@ -170,7 +170,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
             }
         });
         bAdd.add(jButtonFecharPedido);
-        jButtonFecharPedido.setBounds(20, 510, 160, 40);
+        jButtonFecharPedido.setBounds(20, 590, 160, 40);
 
         jButtonVoltar.setText("Voltar");
         jButtonVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -179,11 +179,68 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
             }
         });
         bAdd.add(jButtonVoltar);
-        jButtonVoltar.setBounds(553, 513, 130, 40);
+        jButtonVoltar.setBounds(550, 590, 130, 40);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Descrição do medicamento"));
+
+        jLabel4.setText("Nome:");
+
+        jLabel5.setText("Descrição:");
+
+        jLabel2.setText("Prescrito:");
+
+        jLabelNome.setText("-");
+
+        jLabelDescricao.setText("-");
+
+        jLabelPrescrito.setText("-");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelNome)
+                    .addComponent(jLabelDescricao)
+                    .addComponent(jLabelPrescrito))
+                .addContainerGap(628, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabelNome))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabelDescricao))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabelPrescrito))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        bAdd.add(jPanel2);
+        jPanel2.setBounds(10, 140, 710, 100);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setText("Comprar Medicamentos");
+        bAdd.add(jLabel6);
+        jLabel6.setBounds(280, 10, 190, 40);
 
         getContentPane().add(bAdd, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(899, 611));
+        setSize(new java.awt.Dimension(899, 677));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -209,7 +266,9 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         if (medicamentoBuscado != null){
             dtm.addRow(new Object[]{medicamentoBuscado.nome,medicamentoBuscado.descricao,medicamentoBuscado.prescrito,jSpinnerQuantidade.getValue()});
             medicamentosQuantidadeCarrinho.add(new Pair<Medicamento, Integer>(medicamentoBuscado, (Integer)jSpinnerQuantidade.getValue()));
-            jTextFieldMedicamentoDescricao.setText("");
+            jLabelNome.setText("-");
+            jLabelDescricao.setText("-");
+            jLabelPrescrito.setText("-");
             medicamentoBuscado = null;
         }
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
@@ -222,7 +281,9 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         medicamentoBuscado = new ConsultarMedicamentosControle().buscarMedicamento(jTextFieldNomeMedicamento.getText());
         if (medicamentoBuscado != null){
-            jTextFieldMedicamentoDescricao.setText(medicamentoBuscado.getNome() + " | " + medicamentoBuscado.getDescricao() + " | " + medicamentoBuscado.getprescrito());
+            jLabelNome.setText(medicamentoBuscado.getNome());
+            jLabelDescricao.setText(medicamentoBuscado.getDescricao());
+            jLabelPrescrito.setText(medicamentoBuscado.getprescrito() ? "Sim" : "Não");
         }
         else{
             
@@ -243,7 +304,9 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonFecharPedidoActionPerformed
 
     private void jTextFieldNomeMedicamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldNomeMedicamentoMouseClicked
-        jTextFieldMedicamentoDescricao.setText("");
+        jLabelNome.setText("-");
+        jLabelDescricao.setText("-");
+        jLabelPrescrito.setText("-");
         medicamentoBuscado = null;
     }//GEN-LAST:event_jTextFieldNomeMedicamentoMouseClicked
 
@@ -271,11 +334,17 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelDescricao;
+    private javax.swing.JLabel jLabelNome;
+    private javax.swing.JLabel jLabelPrescrito;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSpinner jSpinnerQuantidade;
-    private javax.swing.JTextField jTextFieldMedicamentoDescricao;
     private javax.swing.JTextField jTextFieldNomeMedicamento;
     private javax.swing.JPanel pnTable;
     private javax.swing.JScrollPane scrollTable;

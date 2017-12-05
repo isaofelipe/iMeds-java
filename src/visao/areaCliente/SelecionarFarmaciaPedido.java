@@ -77,6 +77,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
                 exitForm(evt);
             }
         });
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         bAdd.setLayout(null);
 
@@ -111,7 +112,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         pnTable.add(scrollTable);
 
         bAdd.add(pnTable);
-        pnTable.setBounds(10, 10, 710, 290);
+        pnTable.setBounds(10, 10, 710, 230);
         pnTable.getAccessibleContext().setAccessibleDescription("");
 
         bSelecionarFarmacia.setText("Selecionar Farmácia");
@@ -121,7 +122,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
             }
         });
         bAdd.add(bSelecionarFarmacia);
-        bSelecionarFarmacia.setBounds(730, 250, 150, 40);
+        bSelecionarFarmacia.setBounds(730, 190, 150, 40);
         bAdd.add(jPanel1);
         jPanel1.setBounds(280, 280, 10, 10);
 
@@ -132,7 +133,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
             }
         });
         bAdd.add(jButtonFecharPedido);
-        jButtonFecharPedido.setBounds(20, 720, 160, 40);
+        jButtonFecharPedido.setBounds(20, 640, 160, 40);
 
         scrollTable1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalhes do Pedido"));
 
@@ -156,7 +157,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         tableDetalhesPedido.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         bAdd.add(scrollTable1);
-        scrollTable1.setBounds(20, 320, 690, 250);
+        scrollTable1.setBounds(20, 250, 690, 250);
 
         jPanelEnviarReceita.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanelEnviarReceita.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -196,11 +197,11 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         );
 
         bAdd.add(jPanelEnviarReceita);
-        jPanelEnviarReceita.setBounds(30, 580, 680, 120);
+        jPanelEnviarReceita.setBounds(20, 510, 690, 120);
 
         getContentPane().add(bAdd, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(911, 822));
+        setSize(new java.awt.Dimension(911, 730));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

@@ -19,6 +19,7 @@ public class EscolhaCadastro extends javax.swing.JFrame {
      */
     public EscolhaCadastro() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
