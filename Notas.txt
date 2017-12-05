@@ -1,0 +1,8 @@
+Usuario
+1 - farmacia
+2 - cliente
+
+Estado pedido
+1 - Aberto
+2 - Concluído
+9 - Recusado

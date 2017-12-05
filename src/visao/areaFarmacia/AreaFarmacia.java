@@ -16,6 +16,7 @@ public class AreaFarmacia extends javax.swing.JFrame {
      */
     public AreaFarmacia() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

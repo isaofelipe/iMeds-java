@@ -16,6 +16,7 @@ public class ManterMedicamentos extends javax.swing.JFrame {
      */
     public ManterMedicamentos() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

@@ -22,12 +22,7 @@ public class ConsultarPedidosCliente extends javax.swing.JFrame {
     public ConsultarPedidosCliente() {
         initComponents();
         carregar();
-    }
-    
-    public ConsultarPedidosCliente(javax.swing.JFrame pai) {
-        this.pai = pai;
-        initComponents();
-        carregar();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -122,7 +117,8 @@ public class ConsultarPedidosCliente extends javax.swing.JFrame {
 
     private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
         this.setVisible(false);
-        pai.setVisible(true);
+        AreaCliente areaCliente = new AreaCliente();
+        areaCliente.setVisible(true);
     }//GEN-LAST:event_jButtonVoltarActionPerformed
 
     /**
@@ -168,7 +164,6 @@ public class ConsultarPedidosCliente extends javax.swing.JFrame {
             dtm.addRow(new Object[]{pedido.getIdPedido(), pedido.getData().toString(), pedido.getFarmacia()});
         }
     }
-    javax.swing.JFrame pai;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button buttonDetalhePedido;
     private javax.swing.JButton jButtonVoltar;

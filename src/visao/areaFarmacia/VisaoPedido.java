@@ -21,6 +21,7 @@ public class VisaoPedido extends javax.swing.JFrame {
      */
     public VisaoPedido() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     public VisaoPedido(Pedido pedido, javax.swing.JFrame pai) {
         this.pedido = pedido;
@@ -99,7 +100,7 @@ public class VisaoPedido extends javax.swing.JFrame {
                 jButtonRecusarMouseClicked(evt);
             }
         });
-        getContentPane().add(jButtonRecusar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, -1, -1));
+        getContentPane().add(jButtonRecusar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 420, -1, -1));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalhes "));
 

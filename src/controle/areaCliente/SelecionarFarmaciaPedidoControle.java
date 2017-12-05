@@ -7,6 +7,7 @@ package controle.areaCliente;
 
 import dao.FarmaciaDAOJDBC;
 import dao.FarmaciaMedicamentoDAOJDBC;
+import dao.PedidoDAOJDBC;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ import javafx.util.Pair;
 import modelo.Farmacia;
 import modelo.FarmaciaMedicamento;
 import modelo.Medicamento;
+import modelo.Pedido;
 
 /**
  *
@@ -47,5 +49,10 @@ public class SelecionarFarmaciaPedidoControle {
                 listaOrcamento.put(farmacia.getNome(), orcamento);
         }
         return listaOrcamento;
+    }
+    
+    public void fecharPedido (Pedido pedido, List<Pair<Medicamento, Integer>> medicamentosQuantidadeCarrinho, List<FarmaciaMedicamento> listaFarmaciaMedicamento){
+        int idPedido = new PedidoDAOJDBC().inserirPedido(pedido);
+        
     }
 }

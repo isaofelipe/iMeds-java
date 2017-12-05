@@ -21,6 +21,7 @@ public class DetalharPedidoCliente extends javax.swing.JFrame {
      */
     public DetalharPedidoCliente() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

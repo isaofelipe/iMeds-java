@@ -16,6 +16,7 @@ public class AreaCliente extends javax.swing.JFrame {
      */
     public AreaCliente() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -112,13 +113,13 @@ public class AreaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSairActionPerformed
 
     private void jButtonComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonComprarActionPerformed
-        ConsultarMedicamentos consultarMedicamentos = new ConsultarMedicamentos(this);
+        ConsultarMedicamentos consultarMedicamentos = new ConsultarMedicamentos();
         consultarMedicamentos.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonComprarActionPerformed
 
     private void jButtonConsultarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarPedidosActionPerformed
-        ConsultarPedidosCliente consultarPedidosCliente = new ConsultarPedidosCliente(this);
+        ConsultarPedidosCliente consultarPedidosCliente = new ConsultarPedidosCliente();
         consultarPedidosCliente.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonConsultarPedidosActionPerformed

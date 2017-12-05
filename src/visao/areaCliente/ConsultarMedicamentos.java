@@ -22,11 +22,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
     public ConsultarMedicamentos() {
         
         initComponents();
-    }
-    
-    public ConsultarMedicamentos(AreaCliente pai) {
-        this.pai = pai;
-        initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     /** This method is called from within the constructor to
@@ -253,7 +249,8 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
 
     private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
         this.setVisible(false);
-        pai.setVisible(true);
+        AreaCliente areaCliente = new AreaCliente();
+        areaCliente.setVisible(true);
     }//GEN-LAST:event_jButtonVoltarActionPerformed
     
     /**
@@ -262,7 +259,6 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
     public static void main(String args[]) {
         new ConsultarMedicamentos().show();
     }
-    private javax.swing.JFrame pai;
     private Medicamento medicamentoBuscado = null;
     private List<Pair<Medicamento, Integer>> medicamentosQuantidadeCarrinho = new LinkedList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,6 +5,8 @@
  */
 package dao;
 
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,12 +20,12 @@ import tools.Sessao;
  *
  * @author alunodev06
  */
-public class PedidoDAOJDBC  extends DAOBaseJDBC implements PedidoDAO {
+public class PedidoDAOJDBC extends DAOBaseJDBC implements PedidoDAO {
 
     public List<Pedido> buscarPedidosAbertosPorFarmaciaLogada()
     {
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT idPedido, data, imagemReceita, idFarmacia, idCliente, estado FROM Pedido WHERE idFarmacia = ? AND estado = 1");
+            PreparedStatement stmt = conn.prepareStatement("SELECT idPedido, data, imagemReceita, idFarmacia, idCliente, estado, requerReceita FROM Pedido WHERE idFarmacia = ? AND estado = 1");
             stmt.setInt(1, Sessao.farmaciaLogada.getIdFarmacia());
             ResultSet rset = stmt.executeQuery();
             List<Pedido> listaPedidos = new ArrayList<>();
@@ -34,6 +36,8 @@ public class PedidoDAOJDBC  extends DAOBaseJDBC implements PedidoDAO {
                 pedido.setEstado(rset.getInt("estado"));
                 pedido.setFarmacia(Sessao.farmaciaLogada);
                 pedido.setIdPedido(rset.getInt("idFarmacia"));
+                pedido.setRequerReceita(rset.getBoolean("requerReceita"));
+                
                 listaPedidos.add(pedido);
             }
             return listaPedidos;
@@ -47,7 +51,7 @@ public class PedidoDAOJDBC  extends DAOBaseJDBC implements PedidoDAO {
     public List<Pedido> buscarPedidosDoClienteLogado()
     {
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT idPedido, data, imagemReceita, idFarmacia, idCliente, estado FROM Pedido WHERE idCliente = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT idPedido, data, imagemReceita, idFarmacia, idCliente, estado, requerReceita FROM Pedido WHERE idCliente = ?");
             stmt.setInt(1, Sessao.clienteLogado.getIdCliente());
             ResultSet rset = stmt.executeQuery();
             List<Pedido> listaPedidos = new ArrayList<>();
@@ -58,6 +62,7 @@ public class PedidoDAOJDBC  extends DAOBaseJDBC implements PedidoDAO {
                 pedido.setEstado(rset.getInt("estado"));
                 pedido.setFarmacia(new FarmaciaDAOJDBC().buscarPorId(rset.getInt("idFarmacia")));
                 pedido.setIdPedido(rset.getInt("idFarmacia"));
+                pedido.setRequerReceita(rset.getBoolean("requerReceita"));
                 listaPedidos.add(pedido);
             }
             return listaPedidos;
@@ -71,7 +76,7 @@ public class PedidoDAOJDBC  extends DAOBaseJDBC implements PedidoDAO {
     public Pedido buscarPedidoPorId(int id)
     {
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT idPedido, data, imagemReceita, idFarmacia, idCliente, estado FROM Pedido WHERE idPedido = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT idPedido, data, imagemReceita, idFarmacia, idCliente, estado, requerReceita FROM Pedido WHERE idPedido = ?");
             stmt.setInt(1, id);
             ResultSet rset = stmt.executeQuery();
             if (rset.next()){
@@ -81,6 +86,7 @@ public class PedidoDAOJDBC  extends DAOBaseJDBC implements PedidoDAO {
                 pedido.setEstado(rset.getInt("estado"));
                 pedido.setFarmacia(new FarmaciaDAOJDBC().buscarPorId(rset.getInt("idFarmacia")));
                 pedido.setIdPedido(rset.getInt("idFarmacia"));
+                pedido.setRequerReceita(rset.getBoolean("requerReceita"));
                 return pedido;
             }
         }
@@ -89,5 +95,32 @@ public class PedidoDAOJDBC  extends DAOBaseJDBC implements PedidoDAO {
             return null;
         }
         return null;
+    }
+
+    public int inserirPedido(Pedido pedido) {
+        PreparedStatement stmt;
+        try{
+            stmt = conn.prepareStatement("INSERT INTO Pedido(data, imagemReceita, idFarmacia, idCliente, estado, requerReceita)" + 
+                    "VALUES(?, ?, ?, ?, ?, ?)");
+            stmt.setDate(1, java.sql.Date.valueOf(pedido.getData().toString()));
+            stmt.setBlob(2, pedido.getImagemReceita());
+            stmt.setInt(3, pedido.getFarmacia().getIdFarmacia());
+            stmt.setInt(4, pedido.getCliente().getIdCliente());
+            stmt.setInt(5, pedido.getEstado());
+            stmt.setBoolean(6, pedido.getRequerReceita());
+            stmt.executeUpdate();
+            stmt.clearBatch();     //limpa a query anterior do objeto
+            
+            //seleção do ID
+            stmt = conn.prepareStatement("SELECT MAX(idPedido) FROM Pedido");
+            ResultSet rs = stmt.executeQuery();
+            int id = rs.getInt(1);
+            stmt.close();
+            return id;
+        }
+        catch(SQLException e){
+            System.out.println("erro sql" + e.getMessage());
+        }
+        return 0;
     }
 }

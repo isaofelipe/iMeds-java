@@ -16,4 +16,5 @@ public interface PedidoDAO {
     public List<Pedido> buscarPedidosAbertosPorFarmaciaLogada();
     public List<Pedido> buscarPedidosDoClienteLogado();
     public Pedido buscarPedidoPorId(int id);
+    public int inserirPedido(Pedido pedido);
 }

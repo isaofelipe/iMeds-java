@@ -5,6 +5,7 @@
  */
 package tools;
 
+import dao.ClienteDAOJDBC;
 import dao.FarmaciaDAOJDBC;
 import modelo.Cliente;
 import modelo.Farmacia;
@@ -15,5 +16,5 @@ import modelo.Farmacia;
  */
 public class Sessao {
     public static Farmacia farmaciaLogada = new FarmaciaDAOJDBC().buscarPorId(1);
-    public static Cliente clienteLogado;
+    public static Cliente clienteLogado = new ClienteDAOJDBC().buscarClientePorId(3);
 }

@@ -16,6 +16,7 @@ public class CadastroFarmacia extends javax.swing.JFrame {
      */
     public CadastroFarmacia() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

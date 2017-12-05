@@ -16,6 +16,7 @@ public class GerenciarMedicamento extends javax.swing.JFrame {
      */
     public GerenciarMedicamento() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

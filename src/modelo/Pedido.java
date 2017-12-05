@@ -5,8 +5,9 @@
  */
 package modelo;
 
+import java.io.File;
 import java.sql.Blob;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
@@ -19,6 +20,27 @@ public class Pedido {
     public Farmacia farmacia;
     public Cliente cliente;
     public int estado;
+    public Boolean requerReceita = false;
+    
+    public static final int ABERTO = 1;
+    public static final int CONCLUIDO = 2;
+    public static final int RECUSADO = 9;
+
+    public Pedido(Cliente cliente, int estado) {
+        this.cliente = cliente;
+        this.estado = estado;
+    }
+
+    public Pedido() {
+    }
+
+    public Boolean getRequerReceita() {
+        return requerReceita;
+    }
+
+    public void setRequerReceita(Boolean requerReceita) {
+        this.requerReceita = requerReceita;
+    }
 
     public int getIdPedido() {
         return idPedido;

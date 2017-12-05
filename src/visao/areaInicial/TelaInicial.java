@@ -6,6 +6,7 @@
 package visao.areaInicial;
 
 import controle.areaInicial.TelaInicialControle;
+import visao.areaCliente.AreaCliente;
 
 /**
  *
@@ -138,8 +139,8 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordFieldSenhaActionPerformed
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
-        ConsultarMedicamentosVelho consultarMedicamentos = new ConsultarMedicamentosVelho();
-        consultarMedicamentos.setVisible(true);
+        AreaCliente areaCliente = new AreaCliente();
+        areaCliente.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonLoginActionPerformed
 

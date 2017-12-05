@@ -6,6 +6,9 @@ import dao.FarmaciaDAOJDBC;
 import dao.FarmaciaMedicamentoDAOJDBC;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +19,9 @@ import javax.swing.UIManager;
 import modelo.Farmacia;
 import modelo.FarmaciaMedicamento;
 import modelo.Medicamento;
+import modelo.Pedido;
+import tools.Sessao;
+import tools.Utilidades;
 
 /*
  * ExemploJTable.java
@@ -33,6 +39,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     public SelecionarFarmaciaPedido() {
         initComponents();
         carregar();
+        this.setLocationRelativeTo(null);
     }
     public SelecionarFarmaciaPedido(List<Pair<Medicamento, Integer>> medicamentosCarrinho) {
         this.medicamentosQuantidadeCarrinho = medicamentosCarrinho;
@@ -218,8 +225,27 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_exitForm
 
     private void jButtonFecharPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharPedidoActionPerformed
-        if (farmaciaSelecionada != null && arquivo != null){
+        if (farmaciaSelecionada != null && (!pedido.getRequerReceita() || (!pedido.getRequerReceita() && arquivo != null))){
             JOptionPane.showMessageDialog(null, "Compra realizada com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE, UIManager.getIcon("OptionPane.informationIcon"));
+            pedido.setData(new Date());
+            pedido.setFarmacia(farmaciaSelecionada);
+            if (pedido.getRequerReceita())
+            {
+                try{
+                    pedido.setImagemReceita(new javax.sql.rowset.serial.SerialBlob(Utilidades.lerArquivo(arquivo.getPath())));
+                    
+                    ConsultarPedidosCliente consultarPedidosCliente = new ConsultarPedidosCliente();
+                    this.setVisible(false);
+                    consultarPedidosCliente.setVisible(true);
+                }
+                catch (IOException e){
+                    System.out.println(e.getMessage());
+                }
+                catch(SQLException e){
+                    System.out.println(e.getMessage());
+                }
+            }
+            new SelecionarFarmaciaPedidoControle().fecharPedido(pedido, medicamentosQuantidadeCarrinho, listaFarmaciaMedicamento);
         }
     }//GEN-LAST:event_jButtonFecharPedidoActionPerformed
 
@@ -244,6 +270,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     private List<FarmaciaMedicamento> listaFarmaciaMedicamento = new LinkedList<>();
     private Farmacia farmaciaSelecionada = null;
     private File arquivo = null;
+    private Pedido pedido = new Pedido(Sessao.clienteLogado, Pedido.ABERTO);
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bAdd;
@@ -270,6 +297,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         for (Pair<Medicamento, Integer> medicamentoQuantidade : medicamentosQuantidadeCarrinho){
             if (medicamentoQuantidade.getKey().getprescrito()){
                 jPanelEnviarReceita.setVisible(true);
+                pedido.setRequerReceita(true);
             }
         }
     }
