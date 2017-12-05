@@ -6,8 +6,10 @@
 package controle.areaFarmacia;
 
 import dao.ItemPedidoDAOJDBC;
+import dao.PedidoDAOJDBC;
 import java.util.List;
 import modelo.ItemPedido;
+import modelo.Pedido;
 
 /**
  *
@@ -17,6 +19,9 @@ public class VisaoPedidoControle {
 
     public List<ItemPedido> listarItensPedido(int idPedido) {
         return new ItemPedidoDAOJDBC().buscarPorIdPedido(idPedido);
+    }
+    public void setEstado(Pedido pedido, int estado){
+        new PedidoDAOJDBC().setEstadoPedido(pedido, estado);
     }
     
 }

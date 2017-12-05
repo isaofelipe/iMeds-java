@@ -123,4 +123,18 @@ public class PedidoDAOJDBC extends DAOBaseJDBC implements PedidoDAO {
         }
         return 0;
     }
+    
+    public void setEstadoPedido(Pedido pedido, int estado){
+        PreparedStatement stmt;
+        try{
+            stmt = conn.prepareStatement("UPDATE Pedido SET Pedido.estado = ? WHERE Pedido.idPedido = ?");
+            stmt.setInt(1,estado);
+            stmt.setInt(2,pedido.idPedido);
+            stmt.executeUpdate();
+            stmt.close();
+        }
+        catch(SQLException e){
+            System.out.println("erro sql" + e.getMessage());
+        }
+    }
 }
