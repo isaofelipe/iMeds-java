@@ -24,6 +24,11 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         initComponents();
     }
     
+    public ConsultarMedicamentos(AreaCliente pai) {
+        this.pai = pai;
+        initComponents();
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -49,6 +54,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jButtonFecharPedido = new javax.swing.JButton();
+        jButtonVoltar = new javax.swing.JButton();
 
         setTitle("Exemplo JTable imasters");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -128,11 +134,11 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
             }
         });
         bAdd.add(jTextFieldNomeMedicamento);
-        jTextFieldNomeMedicamento.setBounds(10, 30, 710, 22);
+        jTextFieldNomeMedicamento.setBounds(10, 30, 710, 20);
 
         jLabel1.setText("Nome Medicamento");
         bAdd.add(jLabel1);
-        jLabel1.setBounds(10, 10, 113, 16);
+        jLabel1.setBounds(10, 10, 93, 14);
 
         jButtonBuscar.setText("Buscar");
         jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -141,21 +147,21 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
             }
         });
         bAdd.add(jButtonBuscar);
-        jButtonBuscar.setBounds(10, 60, 110, 25);
+        jButtonBuscar.setBounds(10, 60, 110, 23);
 
         jLabel2.setText("Descrição do Medicamento:");
         bAdd.add(jLabel2);
-        jLabel2.setBounds(10, 100, 158, 16);
+        jLabel2.setBounds(10, 100, 131, 14);
         bAdd.add(jTextFieldMedicamentoDescricao);
-        jTextFieldMedicamentoDescricao.setBounds(10, 120, 710, 22);
+        jTextFieldMedicamentoDescricao.setBounds(10, 120, 710, 20);
 
         jSpinnerQuantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, 30, 1));
         bAdd.add(jSpinnerQuantidade);
-        jSpinnerQuantidade.setBounds(80, 150, 45, 22);
+        jSpinnerQuantidade.setBounds(80, 150, 39, 20);
 
         jLabel3.setText("Quantidade:");
         bAdd.add(jLabel3);
-        jLabel3.setBounds(10, 150, 70, 16);
+        jLabel3.setBounds(10, 150, 60, 14);
         bAdd.add(jSeparator1);
         jSeparator1.setBounds(0, 90, 890, 10);
         bAdd.add(jSeparator2);
@@ -169,6 +175,15 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         });
         bAdd.add(jButtonFecharPedido);
         jButtonFecharPedido.setBounds(20, 510, 160, 40);
+
+        jButtonVoltar.setText("Voltar");
+        jButtonVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVoltarActionPerformed(evt);
+            }
+        });
+        bAdd.add(jButtonVoltar);
+        jButtonVoltar.setBounds(553, 513, 130, 40);
 
         getContentPane().add(bAdd, java.awt.BorderLayout.CENTER);
 
@@ -235,6 +250,11 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
         jTextFieldMedicamentoDescricao.setText("");
         medicamentoBuscado = null;
     }//GEN-LAST:event_jTextFieldNomeMedicamentoMouseClicked
+
+    private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
+        this.setVisible(false);
+        pai.setVisible(true);
+    }//GEN-LAST:event_jButtonVoltarActionPerformed
     
     /**
      * @param args the command line arguments
@@ -242,7 +262,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
     public static void main(String args[]) {
         new ConsultarMedicamentos().show();
     }
-    
+    private javax.swing.JFrame pai;
     private Medicamento medicamentoBuscado = null;
     private List<Pair<Medicamento, Integer>> medicamentosQuantidadeCarrinho = new LinkedList<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -251,6 +271,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAdicionar;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonFecharPedido;
+    private javax.swing.JButton jButtonVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

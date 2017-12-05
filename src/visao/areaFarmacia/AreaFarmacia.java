@@ -151,7 +151,7 @@ public class AreaFarmacia extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        ConsultarPedidos consultarPedidos = new ConsultarPedidos();
+        ConsultarPedidosFarmacia consultarPedidos = new ConsultarPedidosFarmacia();
         consultarPedidos.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1MouseClicked

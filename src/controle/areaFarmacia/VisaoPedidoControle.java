@@ -5,18 +5,18 @@
  */
 package controle.areaFarmacia;
 
-import dao.PedidoDAOJDBC;
+import dao.ItemPedidoDAOJDBC;
 import java.util.List;
-import modelo.Pedido;
+import modelo.ItemPedido;
 
 /**
  *
- * @author Mateus
+ * @author Isao Felipe Morigaki
  */
-public class ConsultarPedidosControle {
+public class VisaoPedidoControle {
 
-    public List<Pedido> listarPedidos() {
-        List<Pedido> listaPedidos = new PedidoDAOJDBC().buscarPedidosPorFarmaciaLogada;
+    public List<ItemPedido> listarItensPedido(int idPedido) {
+        return new ItemPedidoDAOJDBC().buscarPorIdPedido(idPedido);
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package controle.areaCliente;
 
+import dao.ItemPedidoDAOJDBC;
 import java.util.List;
 import modelo.ItemPedido;
 
@@ -15,6 +16,6 @@ import modelo.ItemPedido;
 public class DetalharPedidoClienteControle {
     public List<ItemPedido> listarItensPedido(int idPedido)
     {
-        
+        return new ItemPedidoDAOJDBC().buscarPorIdPedido(idPedido);
     }
 }

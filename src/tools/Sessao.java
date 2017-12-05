@@ -5,6 +5,7 @@
  */
 package tools;
 
+import dao.FarmaciaDAOJDBC;
 import modelo.Cliente;
 import modelo.Farmacia;
 
@@ -13,6 +14,6 @@ import modelo.Farmacia;
  * @author Isao Felipe Morigaki
  */
 public class Sessao {
-    public static Farmacia farmaciaLogada;
+    public static Farmacia farmaciaLogada = new FarmaciaDAOJDBC().buscarPorId(1);
     public static Cliente clienteLogado;
 }

@@ -18,7 +18,7 @@ import tools.Sessao;
  *
  * @author alunodev06
  */
-public class ItemDePedidoDAOJDBC extends DAOBaseJDBC implements ItemDePedidoDAO{
+public class ItemPedidoDAOJDBC extends DAOBaseJDBC implements ItemPedidoDAO{
 
     @Override
     public void salvarItemDePedido() {
@@ -28,20 +28,20 @@ public class ItemDePedidoDAOJDBC extends DAOBaseJDBC implements ItemDePedidoDAO{
     @Override
     public List<ItemPedido> buscarPorIdPedido(int idPedido) {
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT idPedido, data, imagemReceita, idFarmacia, idCliente FROM Pedido WHERE idCliente = ?");
-            stmt.setInt(1, Sessao.clienteLogado.getIdCliente());
+            PreparedStatement stmt = conn.prepareStatement("SELECT idItemPedido, quantidade, idMedicamento, idPedido FROM item_pedido WHERE idItemPedido = ?");
+            stmt.setInt(1, idPedido);
             ResultSet rset = stmt.executeQuery();
-            List<Pedido> listaPedidos = new ArrayList<>();
+            List<ItemPedido> listaItensPedido = new ArrayList<>();
             while (rset.next()){
-                Pedido pedido = new Pedido();
-                pedido.setCliente(Sessao.clienteLogado);
-                pedido.setData(rset.getDate("data"));
-                pedido.setEstado(rset.getInt("estado"));
-                pedido.setFarmacia(new FarmaciaDAOJDBC().buscarPorId(rset.getInt("idFarmacia")));
-                pedido.setIdPedido(rset.getInt("idFarmacia"));
-                listaPedidos.add(pedido);
+                ItemPedido itemPedido = new ItemPedido();
+                itemPedido.setIdItemPedido(idPedido);
+                itemPedido.setMedicamento(new MedicamentoDAOJDBC().buscarPorId(rset.getInt("idMedicamento")));
+                itemPedido.setPedido(new PedidoDAOJDBC().buscarPedidoPorId(rset.getInt("idPedido")));
+                itemPedido.setQuantidade(rset.getInt("quantidade"));
+                
+                listaItensPedido.add(itemPedido);
             }
-            return listaPedidos;
+            return listaItensPedido;
         }
         catch(SQLException e){
             System.out.println("Erro de sql" + e.getMessage());

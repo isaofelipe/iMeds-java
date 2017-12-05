@@ -13,6 +13,7 @@ import modelo.Pedido;
  * @author alunodev06
  */
 public interface PedidoDAO {
-    public List<Pedido> buscarPedidosPorFarmaciaLogada();
+    public List<Pedido> buscarPedidosAbertosPorFarmaciaLogada();
     public List<Pedido> buscarPedidosDoClienteLogado();
+    public Pedido buscarPedidoPorId(int id);
 }

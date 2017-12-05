@@ -12,7 +12,7 @@ import modelo.ItemPedido;
  *
  * @author alunodev06
  */
-public interface ItemDePedidoDAO {
+public interface ItemPedidoDAO {
     public void salvarItemDePedido();
     public List<ItemPedido> buscarPorIdPedido(int idPedido);
 }

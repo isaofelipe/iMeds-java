@@ -6,7 +6,6 @@
 package visao.areaInicial;
 
 import controle.areaInicial.TelaInicialControle;
-import visao.areaCliente.ConsultarMedicamentosVelho;
 
 /**
  *

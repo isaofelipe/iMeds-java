@@ -16,6 +16,12 @@ public class Cliente extends Usuario {
     public String endereco;
     public String telefone;
 
+    @Override
+    public String toString()
+    {
+        return this.getNome();
+    }
+    
     public Cliente(int idCliente, String nome, String CPF, String endereco, String telefone, String email, String senha) {
         this.idCliente = idCliente;
         this.nome = nome;
