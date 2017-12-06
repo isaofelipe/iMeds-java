@@ -116,10 +116,10 @@ public class CadastroCliente extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jToggleButtonConfirmar)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
-                                    .addComponent(jButtonCancelar))
-                                .addComponent(jTextFieldNome, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButtonCancelar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jToggleButtonConfirmar))
+                                .addComponent(jTextFieldNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                                 .addComponent(jTextFieldEndereco, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jTextFieldCPF, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,9 +160,9 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButtonConfirmar)
-                    .addComponent(jButtonCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonCancelar)
+                    .addComponent(jToggleButtonConfirmar))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
