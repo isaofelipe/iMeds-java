@@ -16,5 +16,5 @@ import modelo.Farmacia;
  */
 public class Sessao {
     public static Farmacia farmaciaLogada = new FarmaciaDAOJDBC().buscarPorId(2);
-    public static Cliente clienteLogado = new ClienteDAOJDBC().buscarClientePorId(3);
+    public static Cliente clienteLogado = new ClienteDAOJDBC().buscarClientePorId(4);
 }
