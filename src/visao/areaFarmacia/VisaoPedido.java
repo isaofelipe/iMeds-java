@@ -225,7 +225,7 @@ public class VisaoPedido extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButtonRecusarMouseClicked
 
-<<<<<<< HEAD
+
     private void jButtonVisualizarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisualizarReceitaActionPerformed
         Blob imagem = pedido.getImagemReceita();
         try{
@@ -247,11 +247,11 @@ public class VisaoPedido extends javax.swing.JFrame {
             Logger.getLogger(VisaoPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonVisualizarReceitaActionPerformed
-=======
+
     private void jButtonRecusarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRecusarActionPerformed
         //nao usa
     }//GEN-LAST:event_jButtonRecusarActionPerformed
->>>>>>> origin/master
+
 
     /**
      * @param args the command line arguments
