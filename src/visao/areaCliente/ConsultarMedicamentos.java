@@ -264,7 +264,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)table.getModel();
         if (medicamentoBuscado != null){
-            dtm.addRow(new Object[]{medicamentoBuscado.nome,medicamentoBuscado.descricao,medicamentoBuscado.prescrito,jSpinnerQuantidade.getValue()});
+            dtm.addRow(new Object[]{medicamentoBuscado.nome,medicamentoBuscado.descricao,medicamentoBuscado.prescrito ? "Sim" : "Não",jSpinnerQuantidade.getValue()});
             medicamentosQuantidadeCarrinho.add(new Pair<Medicamento, Integer>(medicamentoBuscado, (Integer)jSpinnerQuantidade.getValue()));
             jLabelNome.setText("-");
             jLabelDescricao.setText("-");

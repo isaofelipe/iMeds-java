@@ -259,20 +259,21 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
                 try{
                     byte[] arquivoBytes = Files.readAllBytes(arquivo.toPath());
                     pedido.setImagemReceita(new javax.sql.rowset.serial.SerialBlob(arquivoBytes));
-                    //FileInputStream in = new FileInputStream(arquivo);
-                    //byte[] arquivoBytes = IOUtils.toByteArray(in);
-                    //pedido.setImagemReceita(new javax.sql.rowset.serial.SerialBlob(Utilidades.lerArquivo(arquivo.getPath())));
-                    new SelecionarFarmaciaPedidoControle().fecharPedido(pedido, medicamentosQuantidadeCarrinho, listaItemPedido);
-                    JOptionPane.showMessageDialog(null, "Compra realizada com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE, UIManager.getIcon("OptionPane.informationIcon"));
-                    ConsultarPedidosCliente consultarPedidosCliente = new ConsultarPedidosCliente();
-                    this.setVisible(false);
-                    consultarPedidosCliente.setVisible(true);
                 }
                 catch (Exception e){
                     JOptionPane.showMessageDialog(null, "Ocorreu algum erro", "Erro", JOptionPane.PLAIN_MESSAGE, UIManager.getIcon("OptionPane.errorIcon"));
                 }
             }
-            
+            try{
+                new SelecionarFarmaciaPedidoControle().fecharPedido(pedido, medicamentosQuantidadeCarrinho, listaItemPedido);
+                JOptionPane.showMessageDialog(null, "Compra realizada com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE, UIManager.getIcon("OptionPane.informationIcon"));
+                ConsultarPedidosCliente consultarPedidosCliente = new ConsultarPedidosCliente();
+                this.setVisible(false);
+                consultarPedidosCliente.setVisible(true);
+            }
+            catch(SQLException e){
+                System.out.println("Erro: " + e.getMessage());
+            }
         }
     }//GEN-LAST:event_jButtonFecharPedidoActionPerformed
 
