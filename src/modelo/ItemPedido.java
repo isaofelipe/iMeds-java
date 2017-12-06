@@ -16,6 +16,15 @@ public class ItemPedido {
     public Pedido pedido;
     public Double precoUnitario;
 
+    public ItemPedido() {
+    }
+
+    public ItemPedido(Medicamento medicamento, Double precoUnitario, int quantidade) {
+        this.quantidade = quantidade;
+        this.medicamento = medicamento;
+        this.precoUnitario = precoUnitario;
+    }
+
     public int getIdItemPedido() {
         return idItemPedido;
     }

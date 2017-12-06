@@ -18,5 +18,9 @@ public class ConsultarPedidosClienteControle {
     public List<Pedido> listarPedidos() {
         return new PedidoDAOJDBC().buscarPedidosDoClienteLogado();
     }
+
+    public Pedido ObterPedidoSelecionado(Integer id) {
+        return new PedidoDAOJDBC().buscarPedidoPorId(id);
+    }
     
 }

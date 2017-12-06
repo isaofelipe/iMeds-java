@@ -7,7 +7,11 @@ package modelo;
 
 import java.io.File;
 import java.sql.Blob;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -15,12 +19,13 @@ import java.util.Date;
  */
 public class Pedido {
     public int idPedido;
-    public Date data;
+    public Timestamp dataHora;
     public Blob imagemReceita;
     public Farmacia farmacia;
     public Cliente cliente;
     public int estado;
     public Boolean requerReceita = false;
+    public List<ItemPedido> listaItemPedido = new ArrayList<>();
     
     public static final int ABERTO = 1;
     public static final int CONCLUIDO = 2;
@@ -50,12 +55,12 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public Date getData() {
-        return data;
+    public Timestamp getDataHora() {
+        return dataHora;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDataHora(Timestamp data) {
+        this.dataHora = data;
     }
 
     public Blob getImagemReceita() {
@@ -89,5 +94,12 @@ public class Pedido {
     public void setEstado(int estado) {
         this.estado = estado;
     }
-    
+
+    public List<ItemPedido> getListaItemPedido() {
+        return listaItemPedido;
+    }
+
+    public void setListaItemPedido(List<ItemPedido> listaItemPedido) {
+        this.listaItemPedido = listaItemPedido;
+    }
 }

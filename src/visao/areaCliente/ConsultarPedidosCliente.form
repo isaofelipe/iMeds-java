@@ -32,11 +32,11 @@
                           <Component id="jButtonVoltar" min="-2" pref="122" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="484" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="buttonDetalhePedido" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButtonDetalhes" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -44,13 +44,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="buttonDetalhePedido" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="jLabel1" min="-2" pref="35" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="308" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jScrollPane1" min="-2" pref="308" max="-2" attributes="0"/>
+                  <Component id="jButtonDetalhes" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButtonVoltar" min="-2" pref="36" max="-2" attributes="0"/>
@@ -73,7 +71,7 @@
               <Table columnCount="4" rowCount="0">
                 <Column editable="true" title="ID do Pedido" type="java.lang.Integer"/>
                 <Column editable="true" title="Data" type="java.lang.String"/>
-                <Column editable="true" title="Farm&#xe1;cia" type="java.lang.Object"/>
+                <Column editable="true" title="Farm&#xe1;cia" type="java.lang.String"/>
                 <Column editable="true" title="Estado" type="java.lang.String"/>
               </Table>
             </Property>
@@ -116,20 +114,20 @@
         <Property name="text" type="java.lang.String" value="Seus Pedidos"/>
       </Properties>
     </Component>
-    <Component class="java.awt.Button" name="buttonDetalhePedido">
-      <Properties>
-        <Property name="label" type="java.lang.String" value="Ver Detalhes"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonDetalhePedidoActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="jButtonVoltar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Voltar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonVoltarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonDetalhes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Detalhes"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDetalhesActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

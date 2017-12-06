@@ -159,7 +159,7 @@ public class ConsultarPedidosFarmacia extends javax.swing.JFrame {
         int l = jTablePedidos.getSelectedRow();
         if (l != -1)
         {
-            Pedido pedidoSelecionado = new ConsultarPedidosFarmaciaControle().ObterPedidoSelecionado((Integer)jTablePedidos.getModel().getValueAt(0, l));
+            Pedido pedidoSelecionado = new ConsultarPedidosFarmaciaControle().ObterPedidoSelecionado((Integer)jTablePedidos.getModel().getValueAt(l, 0));
             VisaoPedido visaoPedido = new VisaoPedido(pedidoSelecionado, this);
             visaoPedido.setVisible(true);
             this.setVisible(false);
@@ -206,7 +206,7 @@ public class ConsultarPedidosFarmacia extends javax.swing.JFrame {
         javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)jTablePedidos.getModel();
         for (Pedido pedido : listaPedidos)
         {
-            dtm.addRow(new Object[]{pedido.getIdPedido(), pedido.getCliente(), pedido.getData().toString()});
+            dtm.addRow(new Object[]{pedido.getIdPedido(), pedido.getCliente(), pedido.getDataHora().toString()});
         }
     }
 

@@ -295,11 +295,11 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldNomeMedicamentoActionPerformed
 
     private void jButtonFecharPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharPedidoActionPerformed
-        this.setVisible(false);
         if (medicamentosQuantidadeCarrinho.size() > 0)
         {
-            SelecionarFarmaciaPedido selecionarFarmaciaPedido = new SelecionarFarmaciaPedido(medicamentosQuantidadeCarrinho);
+            SelecionarFarmaciaPedido selecionarFarmaciaPedido = new SelecionarFarmaciaPedido(medicamentosQuantidadeCarrinho, this);
             selecionarFarmaciaPedido.setVisible(true);
+            this.setVisible(false);
         }
     }//GEN-LAST:event_jButtonFecharPedidoActionPerformed
 

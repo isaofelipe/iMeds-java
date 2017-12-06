@@ -28,7 +28,7 @@ public class ItemPedidoDAOJDBC extends DAOBaseJDBC implements ItemPedidoDAO{
     @Override
     public List<ItemPedido> buscarPorIdPedido(int idPedido) {
         try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT idItemPedido, quantidade, idMedicamento, idPedido FROM item_pedido WHERE idItemPedido = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT idItemPedido, quantidade, idMedicamento, idPedido, preco_unitario FROM item_pedido WHERE idPedido = ?");
             stmt.setInt(1, idPedido);
             ResultSet rset = stmt.executeQuery();
             List<ItemPedido> listaItensPedido = new ArrayList<>();
@@ -38,6 +38,7 @@ public class ItemPedidoDAOJDBC extends DAOBaseJDBC implements ItemPedidoDAO{
                 itemPedido.setMedicamento(new MedicamentoDAOJDBC().buscarPorId(rset.getInt("idMedicamento")));
                 itemPedido.setPedido(new PedidoDAOJDBC().buscarPedidoPorId(rset.getInt("idPedido")));
                 itemPedido.setQuantidade(rset.getInt("quantidade"));
+                itemPedido.setPrecoUnitario(rset.getDouble("preco_unitario"));
                 
                 listaItensPedido.add(itemPedido);
             }

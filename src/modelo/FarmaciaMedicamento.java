@@ -10,7 +10,7 @@ package modelo;
  * @author alunodev02
  */
 public class FarmaciaMedicamento {
-    public float preco;
+    public Double preco;
     public int quantEstoque;
     public Farmacia farmacia;
     public Medicamento medicamento;
@@ -18,7 +18,7 @@ public class FarmaciaMedicamento {
     public FarmaciaMedicamento() {
     }
 
-    public FarmaciaMedicamento(float preco, int quantEstoque, Farmacia farmacia, Medicamento medicamento) {
+    public FarmaciaMedicamento(Double preco, int quantEstoque, Farmacia farmacia, Medicamento medicamento) {
         this.preco = preco;
         this.quantEstoque = quantEstoque;
         this.setFarmacia(farmacia);
@@ -37,12 +37,20 @@ public class FarmaciaMedicamento {
             medicamento.adicionarFarmaciaMedicamento(this);
         }
     }
+
+    public Farmacia getFarmacia() {
+        return farmacia;
+    }
+
+    public Medicamento getMedicamento() {
+        return medicamento;
+    }
     
-    public float getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public void setPreco(float preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 

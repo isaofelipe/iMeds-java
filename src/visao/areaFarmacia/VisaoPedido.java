@@ -6,9 +6,21 @@
 package visao.areaFarmacia;
 
 import controle.areaFarmacia.VisaoPedidoControle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import modelo.ItemPedido;
 import modelo.Pedido;
+import tools.Utilidades;
 
 /**
  *
@@ -27,6 +39,7 @@ public class VisaoPedido extends javax.swing.JFrame {
         this.pedido = pedido;
         this.pai = pai;
         initComponents();
+        this.setLocationRelativeTo(null);
         carregar();
     }
 
@@ -53,6 +66,7 @@ public class VisaoPedido extends javax.swing.JFrame {
         jLabelTelefone = new javax.swing.JLabel();
         jLabelEndereco = new javax.swing.JLabel();
         jLabelHora = new javax.swing.JLabel();
+        jButtonVisualizarReceita = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -120,6 +134,14 @@ public class VisaoPedido extends javax.swing.JFrame {
 
         jLabelHora.setText("Hora");
 
+        jButtonVisualizarReceita.setText("Visualizar Receita");
+        jButtonVisualizarReceita.setVisible(false);
+        jButtonVisualizarReceita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVisualizarReceitaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -135,11 +157,17 @@ public class VisaoPedido extends javax.swing.JFrame {
                             .addComponent(jLabel3))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelNome)
-                    .addComponent(jLabelTelefone)
-                    .addComponent(jLabelEndereco)
-                    .addComponent(jLabelHora))
-                .addContainerGap(276, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabelHora)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
+                        .addComponent(jButtonVisualizarReceita))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelNome)
+                            .addComponent(jLabelTelefone)
+                            .addComponent(jLabelEndereco))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,6 +189,10 @@ public class VisaoPedido extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabelHora))
                 .addContainerGap(32, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonVisualizarReceita)
+                .addContainerGap())
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 430, 140));
@@ -185,6 +217,28 @@ public class VisaoPedido extends javax.swing.JFrame {
         consultarPedidos.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonRecusarMouseClicked
+
+    private void jButtonVisualizarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisualizarReceitaActionPerformed
+        Blob imagem = pedido.getImagemReceita();
+        try{
+            InputStream in = imagem.getBinaryStream();
+            BufferedImage bImage = ImageIO.read(in);
+            /*int tamanhoImagem = (int)imagem.length();
+            byte[] imagemEmBytes = imagem.getBytes(1, tamanhoImagem);
+            BufferedImage img = Utilidades.createRGBImage(imagemEmBytes, 344, 468);*/
+            JDialog dialog = new JDialog();
+            dialog.setLocationRelativeTo(null);
+            JLabel labelImagem = new JLabel(new ImageIcon(bImage));
+            dialog.add(labelImagem);
+            dialog.pack();
+            dialog.setVisible(true);
+        }
+        catch (SQLException e){
+            System.out.println("Erro imagem: " + e.getMessage());
+        } catch (IOException ex) {
+            Logger.getLogger(VisaoPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonVisualizarReceitaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,6 +278,10 @@ public class VisaoPedido extends javax.swing.JFrame {
     public void carregar()
     {
         List<ItemPedido> itensPedido = new VisaoPedidoControle().listarItensPedido(pedido.getIdPedido());
+        if (pedido.getRequerReceita())
+        {
+            jButtonVisualizarReceita.setVisible(true);
+        }
         javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)jTableItensPedido.getModel();
         for (ItemPedido itemPedido : itensPedido)
         {
@@ -232,7 +290,7 @@ public class VisaoPedido extends javax.swing.JFrame {
         jLabelNome.setText(pedido.getCliente().getNome());
         jLabelTelefone.setText(pedido.getCliente().getTelefone());
         jLabelEndereco.setText(pedido.getCliente().getEndereco());
-        jLabelHora.setText(pedido.getData().toString());
+        jLabelHora.setText(pedido.getDataHora().toString());
     }
     
     Pedido pedido;
@@ -240,6 +298,7 @@ public class VisaoPedido extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceitar;
     private javax.swing.JButton jButtonRecusar;
+    private javax.swing.JButton jButtonVisualizarReceita;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

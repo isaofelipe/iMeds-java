@@ -37,8 +37,8 @@ public class ConsultarPedidosCliente extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePedidos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        buttonDetalhePedido = new java.awt.Button();
         jButtonVoltar = new javax.swing.JButton();
+        jButtonDetalhes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,7 +51,7 @@ public class ConsultarPedidosCliente extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -63,17 +63,17 @@ public class ConsultarPedidosCliente extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Seus Pedidos");
 
-        buttonDetalhePedido.setLabel("Ver Detalhes");
-        buttonDetalhePedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonDetalhePedidoActionPerformed(evt);
-            }
-        });
-
         jButtonVoltar.setText("Voltar");
         jButtonVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVoltarActionPerformed(evt);
+            }
+        });
+
+        jButtonDetalhes.setText("Detalhes");
+        jButtonDetalhes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDetalhesActionPerformed(evt);
             }
         });
 
@@ -89,20 +89,19 @@ public class ConsultarPedidosCliente extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButtonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonDetalhePedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonDetalhes)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(buttonDetalhePedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonDetalhes))
                 .addGap(18, 18, 18)
                 .addComponent(jButtonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -111,15 +110,23 @@ public class ConsultarPedidosCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonDetalhePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDetalhePedidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buttonDetalhePedidoActionPerformed
-
     private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
         this.setVisible(false);
         AreaCliente areaCliente = new AreaCliente();
         areaCliente.setVisible(true);
     }//GEN-LAST:event_jButtonVoltarActionPerformed
+
+    private void jButtonDetalhesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDetalhesActionPerformed
+        int l = jTablePedidos.getSelectedRow();
+        if (l != -1)
+        {
+            Pedido pedidoSelecionado = new ConsultarPedidosClienteControle().ObterPedidoSelecionado((Integer)jTablePedidos.getModel().getValueAt(l, 0));
+            
+            DetalharPedidoCliente detalharPedidoCliente = new DetalharPedidoCliente(pedidoSelecionado, this);
+            detalharPedidoCliente.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jButtonDetalhesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,11 +168,18 @@ public class ConsultarPedidosCliente extends javax.swing.JFrame {
         javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)jTablePedidos.getModel();
         for (Pedido pedido : listaPedidos)
         {
-            dtm.addRow(new Object[]{pedido.getIdPedido(), pedido.getData().toString(), pedido.getFarmacia()});
+            int estado = pedido.getEstado();
+            String estad = "";
+            switch (estado){
+                case Pedido.ABERTO: estad = "Aberto"; break;
+                case Pedido.CONCLUIDO: estad = "Concluído"; break;
+                case Pedido.RECUSADO: estad = "Recusado"; break;
+            }
+            dtm.addRow(new Object[]{pedido.getIdPedido(), pedido.getDataHora().toString(), pedido.getFarmacia(), estad});
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button buttonDetalhePedido;
+    private javax.swing.JButton jButtonDetalhes;
     private javax.swing.JButton jButtonVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

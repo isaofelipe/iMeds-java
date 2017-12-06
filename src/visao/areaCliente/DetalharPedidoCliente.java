@@ -7,6 +7,7 @@ package visao.areaCliente;
 
 import controle.areaCliente.DetalharPedidoClienteControle;
 import java.util.List;
+import javax.swing.JFrame;
 import modelo.ItemPedido;
 import modelo.Pedido;
 
@@ -15,13 +16,19 @@ import modelo.Pedido;
  * @author Isao Felipe Morigaki
  */
 public class DetalharPedidoCliente extends javax.swing.JFrame {
-
     /**
      * Creates new form DetalharPedidoCliente
      */
     public DetalharPedidoCliente() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+    public DetalharPedidoCliente(Pedido pedido, javax.swing.JFrame pai) {
+        this.pedido = pedido;
+        this.pai = pai;
+        initComponents();
+        this.setLocationRelativeTo(null);
+        carregar();
     }
 
     /**
@@ -38,6 +45,7 @@ public class DetalharPedidoCliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabelTotal = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,22 +76,30 @@ public class DetalharPedidoCliente extends javax.swing.JFrame {
         jLabelTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelTotal.setText("0");
 
+        jButton1.setText("Voltar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelTotal)
                 .addGap(57, 57, 57))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,11 +112,18 @@ public class DetalharPedidoCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabelTotal))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.setVisible(false);
+        pai.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,13 +164,18 @@ public class DetalharPedidoCliente extends javax.swing.JFrame {
     {
         List<ItemPedido> listaItensPedido = new DetalharPedidoClienteControle().listarItensPedido(pedido.getIdPedido());
         javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)jTableDetalhePedido.getModel();
+        Double total = 0.0;
         for (ItemPedido itemPedido : listaItensPedido)
         {
-            dtm.addRow(new Object[]{itemPedido.getMedicamento(), pedido.getData(), itemPedido.getQuantidade(), itemPedido.getPrecoUnitario()});
+            total += itemPedido.getPrecoUnitario() * itemPedido.getQuantidade();
+            dtm.addRow(new Object[]{itemPedido.getMedicamento().getNome(), pedido.getDataHora(), itemPedido.getQuantidade(), itemPedido.getPrecoUnitario()});
         }
+        jLabelTotal.setText(String.valueOf(total));
     }
     private Pedido pedido;
+    private JFrame pai;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelTotal;

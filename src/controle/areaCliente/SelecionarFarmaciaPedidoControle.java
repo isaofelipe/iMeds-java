@@ -8,6 +8,7 @@ package controle.areaCliente;
 import dao.FarmaciaDAOJDBC;
 import dao.FarmaciaMedicamentoDAOJDBC;
 import dao.PedidoDAOJDBC;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Map;
 import javafx.util.Pair;
 import modelo.Farmacia;
 import modelo.FarmaciaMedicamento;
+import modelo.ItemPedido;
 import modelo.Medicamento;
 import modelo.Pedido;
 
@@ -51,8 +53,9 @@ public class SelecionarFarmaciaPedidoControle {
         return listaOrcamento;
     }
     
-    public void fecharPedido (Pedido pedido, List<Pair<Medicamento, Integer>> medicamentosQuantidadeCarrinho, List<FarmaciaMedicamento> listaFarmaciaMedicamento){
-        int idPedido = new PedidoDAOJDBC().inserirPedido(pedido);
-        
+    public void fecharPedido (Pedido pedido, List<Pair<Medicamento, Integer>> medicamentosQuantidadeCarrinho, List<ItemPedido> listaItemPedido) throws SQLException
+    {
+        pedido.setListaItemPedido(listaItemPedido);
+        new PedidoDAOJDBC().inserirPedido(pedido);
     }
 }

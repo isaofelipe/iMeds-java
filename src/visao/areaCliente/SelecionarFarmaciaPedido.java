@@ -5,9 +5,13 @@ import controle.areaCliente.SelecionarFarmaciaPedidoControle;
 import dao.FarmaciaDAOJDBC;
 import dao.FarmaciaMedicamentoDAOJDBC;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,8 +22,10 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import modelo.Farmacia;
 import modelo.FarmaciaMedicamento;
+import modelo.ItemPedido;
 import modelo.Medicamento;
 import modelo.Pedido;
+import sun.misc.IOUtils;
 import tools.Sessao;
 import tools.Utilidades;
 
@@ -41,7 +47,8 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         carregar();
         this.setLocationRelativeTo(null);
     }
-    public SelecionarFarmaciaPedido(List<Pair<Medicamento, Integer>> medicamentosCarrinho) {
+    public SelecionarFarmaciaPedido(List<Pair<Medicamento, Integer>> medicamentosCarrinho, javax.swing.JFrame pai) {
+        this.pai = pai;
         this.medicamentosQuantidadeCarrinho = medicamentosCarrinho;
         initComponents();
         carregar();
@@ -68,6 +75,8 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         jPanelEnviarReceita = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         buttonEnviarReceita = new java.awt.Button();
+        jLabelNomeArquivo = new javax.swing.JLabel();
+        jButtonVoltar = new javax.swing.JButton();
 
         fileChooser.setDialogTitle("Selecione o arquivo da receita");
 
@@ -77,7 +86,6 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
                 exitForm(evt);
             }
         });
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         bAdd.setLayout(null);
 
@@ -172,6 +180,8 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
             }
         });
 
+        jLabelNomeArquivo.setText("-");
+
         javax.swing.GroupLayout jPanelEnviarReceitaLayout = new javax.swing.GroupLayout(jPanelEnviarReceita);
         jPanelEnviarReceita.setLayout(jPanelEnviarReceitaLayout);
         jPanelEnviarReceitaLayout.setHorizontalGroup(
@@ -182,9 +192,12 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jLabel1))
                     .addGroup(jPanelEnviarReceitaLayout.createSequentialGroup()
-                        .addGap(280, 280, 280)
+                        .addGap(310, 310, 310)
+                        .addComponent(jLabelNomeArquivo))
+                    .addGroup(jPanelEnviarReceitaLayout.createSequentialGroup()
+                        .addGap(268, 268, 268)
                         .addComponent(buttonEnviarReceita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(77, 77, 77))
+                .addContainerGap())
         );
         jPanelEnviarReceitaLayout.setVerticalGroup(
             jPanelEnviarReceitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,11 +206,22 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonEnviarReceita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelNomeArquivo)
                 .addContainerGap())
         );
 
         bAdd.add(jPanelEnviarReceita);
         jPanelEnviarReceita.setBounds(20, 510, 690, 120);
+
+        jButtonVoltar.setText("Voltar");
+        jButtonVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVoltarActionPerformed(evt);
+            }
+        });
+        bAdd.add(jButtonVoltar);
+        jButtonVoltar.setBounds(640, 650, 61, 23);
 
         getContentPane().add(bAdd, java.awt.BorderLayout.CENTER);
 
@@ -210,12 +234,13 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         int l = tableOrcamentos.getSelectedRow();
         farmaciaSelecionada = new FarmaciaDAOJDBC().buscarPorNome(tableOrcamentos.getModel().getValueAt(0, l).toString());
         javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)tableDetalhesPedido.getModel();
-        listaFarmaciaMedicamento.clear();
+        listaItemPedido.clear();
         dtm.setRowCount(0);
         for (Pair<Medicamento, Integer> medicamentosQuantidade : medicamentosQuantidadeCarrinho)
         {
             FarmaciaMedicamento farmaciaMedicamento = new FarmaciaMedicamentoDAOJDBC().buscarPorIds(medicamentosQuantidade.getKey().getIdMedicamento(), farmaciaSelecionada.getIdFarmacia());
-            listaFarmaciaMedicamento.add(farmaciaMedicamento);
+            ItemPedido itemPedido = new ItemPedido(farmaciaMedicamento.getMedicamento(), farmaciaMedicamento.getPreco(), medicamentosQuantidade.getValue());
+            listaItemPedido.add(itemPedido);
             dtm.addRow(new Object[]{medicamentosQuantidade.getKey().getNome(), farmaciaMedicamento.getPreco(), medicamentosQuantidade.getValue(), farmaciaMedicamento.getPreco()*medicamentosQuantidade.getValue()});
         }
     }//GEN-LAST:event_bSelecionarFarmaciaActionPerformed
@@ -226,27 +251,28 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_exitForm
 
     private void jButtonFecharPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharPedidoActionPerformed
-        if (farmaciaSelecionada != null && (!pedido.getRequerReceita() || (!pedido.getRequerReceita() && arquivo != null))){
-            JOptionPane.showMessageDialog(null, "Compra realizada com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE, UIManager.getIcon("OptionPane.informationIcon"));
-            pedido.setData(new Date());
+        if (farmaciaSelecionada != null && (!pedido.getRequerReceita() || (pedido.getRequerReceita() && arquivo != null))){
+            pedido.setDataHora(new Timestamp(System.currentTimeMillis()));
             pedido.setFarmacia(farmaciaSelecionada);
             if (pedido.getRequerReceita())
             {
                 try{
-                    pedido.setImagemReceita(new javax.sql.rowset.serial.SerialBlob(Utilidades.lerArquivo(arquivo.getPath())));
-                    
+                    byte[] arquivoBytes = Files.readAllBytes(arquivo.toPath());
+                    pedido.setImagemReceita(new javax.sql.rowset.serial.SerialBlob(arquivoBytes));
+                    //FileInputStream in = new FileInputStream(arquivo);
+                    //byte[] arquivoBytes = IOUtils.toByteArray(in);
+                    //pedido.setImagemReceita(new javax.sql.rowset.serial.SerialBlob(Utilidades.lerArquivo(arquivo.getPath())));
+                    new SelecionarFarmaciaPedidoControle().fecharPedido(pedido, medicamentosQuantidadeCarrinho, listaItemPedido);
+                    JOptionPane.showMessageDialog(null, "Compra realizada com sucesso", "Sucesso", JOptionPane.PLAIN_MESSAGE, UIManager.getIcon("OptionPane.informationIcon"));
                     ConsultarPedidosCliente consultarPedidosCliente = new ConsultarPedidosCliente();
                     this.setVisible(false);
                     consultarPedidosCliente.setVisible(true);
                 }
-                catch (IOException e){
-                    System.out.println(e.getMessage());
-                }
-                catch(SQLException e){
-                    System.out.println(e.getMessage());
+                catch (Exception e){
+                    JOptionPane.showMessageDialog(null, "Ocorreu algum erro", "Erro", JOptionPane.PLAIN_MESSAGE, UIManager.getIcon("OptionPane.errorIcon"));
                 }
             }
-            new SelecionarFarmaciaPedidoControle().fecharPedido(pedido, medicamentosQuantidadeCarrinho, listaFarmaciaMedicamento);
+            
         }
     }//GEN-LAST:event_jButtonFecharPedidoActionPerformed
 
@@ -254,10 +280,16 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             arquivo = fileChooser.getSelectedFile();
+            jLabelNomeArquivo.setText(arquivo.getName());
         } else {
             System.out.println("File access cancelled by user.");
         }
     }//GEN-LAST:event_buttonEnviarReceitaActionPerformed
+
+    private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
+        this.setVisible(false);
+        pai.setVisible(true);
+    }//GEN-LAST:event_jButtonVoltarActionPerformed
     
     /**
      * @param args the command line arguments
@@ -268,10 +300,11 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     
     private Medicamento medicamento;
     private List<Pair<Medicamento, Integer>> medicamentosQuantidadeCarrinho;
-    private List<FarmaciaMedicamento> listaFarmaciaMedicamento = new LinkedList<>();
+    private List<ItemPedido> listaItemPedido = new LinkedList<>();
     private Farmacia farmaciaSelecionada = null;
     private File arquivo = null;
     private Pedido pedido = new Pedido(Sessao.clienteLogado, Pedido.ABERTO);
+    javax.swing.JFrame pai;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bAdd;
@@ -279,7 +312,9 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
     private java.awt.Button buttonEnviarReceita;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JButton jButtonFecharPedido;
+    private javax.swing.JButton jButtonVoltar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelNomeArquivo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelEnviarReceita;
     private javax.swing.JPanel pnTable;

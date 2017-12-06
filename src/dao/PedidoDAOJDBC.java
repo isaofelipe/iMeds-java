@@ -10,8 +10,10 @@ import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.ItemPedido;
 import modelo.Pedido;
 import tools.DAOBaseJDBC;
 import tools.Sessao;
@@ -32,10 +34,10 @@ public class PedidoDAOJDBC extends DAOBaseJDBC implements PedidoDAO {
             while (rset.next()){
                 Pedido pedido = new Pedido();
                 pedido.setCliente(new ClienteDAOJDBC().buscarClientePorId(rset.getInt("idCliente")));
-                pedido.setData(rset.getDate("data"));
+                pedido.setDataHora(rset.getTimestamp("data"));
                 pedido.setEstado(rset.getInt("estado"));
                 pedido.setFarmacia(Sessao.farmaciaLogada);
-                pedido.setIdPedido(rset.getInt("idFarmacia"));
+                pedido.setIdPedido(rset.getInt("idPedido"));
                 pedido.setRequerReceita(rset.getBoolean("requerReceita"));
                 
                 listaPedidos.add(pedido);
@@ -58,10 +60,10 @@ public class PedidoDAOJDBC extends DAOBaseJDBC implements PedidoDAO {
             while (rset.next()){
                 Pedido pedido = new Pedido();
                 pedido.setCliente(Sessao.clienteLogado);
-                pedido.setData(rset.getDate("data"));
+                pedido.setDataHora(rset.getTimestamp("data"));
                 pedido.setEstado(rset.getInt("estado"));
                 pedido.setFarmacia(new FarmaciaDAOJDBC().buscarPorId(rset.getInt("idFarmacia")));
-                pedido.setIdPedido(rset.getInt("idFarmacia"));
+                pedido.setIdPedido(rset.getInt("idPedido"));
                 pedido.setRequerReceita(rset.getBoolean("requerReceita"));
                 listaPedidos.add(pedido);
             }
@@ -82,11 +84,13 @@ public class PedidoDAOJDBC extends DAOBaseJDBC implements PedidoDAO {
             if (rset.next()){
                 Pedido pedido = new Pedido();
                 pedido.setCliente(new ClienteDAOJDBC().buscarClientePorId(rset.getInt("idCliente")));
-                pedido.setData(rset.getDate("data"));
+                pedido.setDataHora(rset.getTimestamp("data"));
                 pedido.setEstado(rset.getInt("estado"));
                 pedido.setFarmacia(new FarmaciaDAOJDBC().buscarPorId(rset.getInt("idFarmacia")));
-                pedido.setIdPedido(rset.getInt("idFarmacia"));
+                pedido.setIdPedido(rset.getInt("idPedido"));
                 pedido.setRequerReceita(rset.getBoolean("requerReceita"));
+                if (pedido.getRequerReceita())
+                    pedido.setImagemReceita(rset.getBlob("imagemReceita"));
                 return pedido;
             }
         }
@@ -97,30 +101,45 @@ public class PedidoDAOJDBC extends DAOBaseJDBC implements PedidoDAO {
         return null;
     }
 
-    public int inserirPedido(Pedido pedido) {
+    public void inserirPedido(Pedido pedido) throws SQLException {
         PreparedStatement stmt;
         try{
+            conn.setAutoCommit(false);
             stmt = conn.prepareStatement("INSERT INTO Pedido(data, imagemReceita, idFarmacia, idCliente, estado, requerReceita)" + 
                     "VALUES(?, ?, ?, ?, ?, ?)");
-            stmt.setDate(1, java.sql.Date.valueOf(pedido.getData().toString()));
+            stmt.setTimestamp(1, pedido.getDataHora());
             stmt.setBlob(2, pedido.getImagemReceita());
             stmt.setInt(3, pedido.getFarmacia().getIdFarmacia());
             stmt.setInt(4, pedido.getCliente().getIdCliente());
             stmt.setInt(5, pedido.getEstado());
-            stmt.setBoolean(6, pedido.getRequerReceita());
+            stmt.setInt(6, pedido.getRequerReceita() ? 1 : 0);
             stmt.executeUpdate();
-            stmt.clearBatch();     //limpa a query anterior do objeto
+            stmt.close();
             
             //seleção do ID
             stmt = conn.prepareStatement("SELECT MAX(idPedido) FROM Pedido");
             ResultSet rs = stmt.executeQuery();
+            rs.next();
             int id = rs.getInt(1);
             stmt.close();
-            return id;
+            
+            for (ItemPedido itemPedido : pedido.getListaItemPedido())
+            {
+                stmt = conn.prepareStatement("INSERT INTO item_pedido(quantidade, idMedicamento, idPedido, preco_unitario)" + 
+                    "VALUES(?, ?, ?, ?)");
+                stmt.setInt(1, itemPedido.getQuantidade());
+                stmt.setInt(2, itemPedido.getMedicamento().getIdMedicamento());
+                stmt.setInt(3, id);
+                stmt.setDouble(4, itemPedido.getPrecoUnitario());
+                stmt.executeUpdate();
+                stmt.close();
+            }
+            
+            conn.commit();
+            conn.setAutoCommit(true);
         }
         catch(SQLException e){
             System.out.println("erro sql" + e.getMessage());
         }
-        return 0;
     }
 }

@@ -143,12 +143,21 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabelNome" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelTelefone" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelEndereco" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelHora" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jLabelHora" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="173" max="32767" attributes="0"/>
+                          <Component id="jButtonVisualizarReceita" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelNome" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelTelefone" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelEndereco" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="276" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -176,6 +185,11 @@
                       <Component id="jLabelHora" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="32" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jButtonVisualizarReceita" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -220,6 +234,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Hora"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonVisualizarReceita">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Visualizar Receita"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonVisualizarReceitaActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButtonVisualizarReceita.setVisible(false);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

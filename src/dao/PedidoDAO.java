@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.sql.SQLException;
 import java.util.List;
 import modelo.Pedido;
 
@@ -16,5 +17,5 @@ public interface PedidoDAO {
     public List<Pedido> buscarPedidosAbertosPorFarmaciaLogada();
     public List<Pedido> buscarPedidosDoClienteLogado();
     public Pedido buscarPedidoPorId(int id);
-    public int inserirPedido(Pedido pedido);
+    public void inserirPedido(Pedido pedido) throws SQLException;
 }

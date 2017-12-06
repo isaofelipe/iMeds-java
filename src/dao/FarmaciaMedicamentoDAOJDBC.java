@@ -28,7 +28,7 @@ public class FarmaciaMedicamentoDAOJDBC extends DAOBaseJDBC implements FarmaciaM
             while (rset.next()){
                 listaFarmaciaMedicamento = new LinkedList<>();
                 FarmaciaMedicamento farmaciaMedicamento = new FarmaciaMedicamento();
-                farmaciaMedicamento.setPreco(rset.getFloat("preco"));
+                farmaciaMedicamento.setPreco(rset.getDouble("preco"));
                 farmaciaMedicamento.setQuantEstoque(rset.getInt("quantEstoque"));
                 farmaciaMedicamento.setFarmacia(new FarmaciaDAOJDBC().buscarPorId(idFarmacia));
                 farmaciaMedicamento.setMedicamento(new MedicamentoDAOJDBC().buscarPorId(rset.getInt(("idMedicamento"))));
@@ -52,7 +52,7 @@ public class FarmaciaMedicamentoDAOJDBC extends DAOBaseJDBC implements FarmaciaM
             while (rset.next()){
                 listaFarmaciaMedicamento = new LinkedList<>();
                 FarmaciaMedicamento farmaciaMedicamento = new FarmaciaMedicamento();
-                farmaciaMedicamento.setPreco(rset.getFloat("preco"));
+                farmaciaMedicamento.setPreco(rset.getDouble("preco"));
                 farmaciaMedicamento.setQuantEstoque(rset.getInt("quantEstoque"));
                 farmaciaMedicamento.setFarmacia(new FarmaciaDAOJDBC().buscarPorId(rset.getInt("idFarmacia")));
                 farmaciaMedicamento.setMedicamento(new MedicamentoDAOJDBC().buscarPorId(rset.getInt("idMedicamento")));
@@ -76,7 +76,7 @@ public class FarmaciaMedicamentoDAOJDBC extends DAOBaseJDBC implements FarmaciaM
             FarmaciaMedicamento farmaciaMedicamento = null;
             if (rset.next()){
                 farmaciaMedicamento = new FarmaciaMedicamento();
-                farmaciaMedicamento.setPreco(rset.getFloat("preco"));
+                farmaciaMedicamento.setPreco(rset.getDouble("preco"));
                 farmaciaMedicamento.setQuantEstoque(rset.getInt("quantEstoque"));
                 farmaciaMedicamento.setFarmacia(new FarmaciaDAOJDBC().buscarPorId(rset.getInt("idFarmacia")));
                 farmaciaMedicamento.setMedicamento(new MedicamentoDAOJDBC().buscarPorId(rset.getInt("idMedicamento")));
