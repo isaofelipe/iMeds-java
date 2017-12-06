@@ -17,10 +17,6 @@ public interface PedidoDAO {
     public List<Pedido> buscarPedidosAbertosPorFarmaciaLogada();
     public List<Pedido> buscarPedidosDoClienteLogado();
     public Pedido buscarPedidoPorId(int id);
-<<<<<<< HEAD
     public void inserirPedido(Pedido pedido) throws SQLException;
-=======
-    public int inserirPedido(Pedido pedido);
     public void setEstadoPedido(Pedido pedido, int estado);
->>>>>>> origin/master
 }
