@@ -130,7 +130,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
             }
         });
         bAdd.add(bSelecionarFarmacia);
-        bSelecionarFarmacia.setBounds(730, 190, 150, 40);
+        bSelecionarFarmacia.setBounds(720, 190, 130, 40);
         bAdd.add(jPanel1);
         jPanel1.setBounds(280, 280, 10, 10);
 
@@ -141,7 +141,7 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
             }
         });
         bAdd.add(jButtonFecharPedido);
-        jButtonFecharPedido.setBounds(20, 640, 160, 40);
+        jButtonFecharPedido.setBounds(550, 640, 160, 40);
 
         scrollTable1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalhes do Pedido"));
 
@@ -221,11 +221,11 @@ public class SelecionarFarmaciaPedido extends javax.swing.JFrame {
             }
         });
         bAdd.add(jButtonVoltar);
-        jButtonVoltar.setBounds(640, 650, 61, 23);
+        jButtonVoltar.setBounds(20, 640, 140, 40);
 
         getContentPane().add(bAdd, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(911, 730));
+        setSize(new java.awt.Dimension(873, 730));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

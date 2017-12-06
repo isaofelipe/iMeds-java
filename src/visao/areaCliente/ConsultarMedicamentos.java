@@ -121,7 +121,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
             }
         });
         bAdd.add(bDelete);
-        bDelete.setBounds(740, 540, 130, 30);
+        bDelete.setBounds(280, 590, 150, 40);
         bAdd.add(jPanel1);
         jPanel1.setBounds(280, 230, 10, 10);
 
@@ -170,7 +170,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
             }
         });
         bAdd.add(jButtonFecharPedido);
-        jButtonFecharPedido.setBounds(20, 590, 160, 40);
+        jButtonFecharPedido.setBounds(560, 590, 160, 40);
 
         jButtonVoltar.setText("Voltar");
         jButtonVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -179,7 +179,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
             }
         });
         bAdd.add(jButtonVoltar);
-        jButtonVoltar.setBounds(550, 590, 130, 40);
+        jButtonVoltar.setBounds(30, 590, 130, 40);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Descrição do medicamento"));
 
@@ -240,7 +240,7 @@ public class ConsultarMedicamentos extends javax.swing.JFrame {
 
         getContentPane().add(bAdd, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(899, 677));
+        setSize(new java.awt.Dimension(776, 677));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
