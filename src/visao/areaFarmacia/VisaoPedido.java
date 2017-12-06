@@ -114,6 +114,11 @@ public class VisaoPedido extends javax.swing.JFrame {
                 jButtonRecusarMouseClicked(evt);
             }
         });
+        jButtonRecusar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRecusarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButtonRecusar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 420, -1, -1));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalhes "));
@@ -201,10 +206,11 @@ public class VisaoPedido extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAceitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceitarActionPerformed
-        // TODO add your handling code here:
+        //nao usa
     }//GEN-LAST:event_jButtonAceitarActionPerformed
 
     private void jButtonAceitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAceitarMouseClicked
+        new VisaoPedidoControle().setEstado(this.pedido, Pedido.CONCLUIDO);
         ConsultarPedidosFarmacia consultarPedidos = new ConsultarPedidosFarmacia();
         // Codigo para atualizar a tabela
         consultarPedidos.setVisible(true);
@@ -212,12 +218,14 @@ public class VisaoPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAceitarMouseClicked
 
     private void jButtonRecusarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRecusarMouseClicked
+        new VisaoPedidoControle().setEstado(this.pedido, Pedido.RECUSADO);
         ConsultarPedidosFarmacia consultarPedidos = new ConsultarPedidosFarmacia();
         // Codigo para atualizar a tabela
         consultarPedidos.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonRecusarMouseClicked
 
+<<<<<<< HEAD
     private void jButtonVisualizarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisualizarReceitaActionPerformed
         Blob imagem = pedido.getImagemReceita();
         try{
@@ -239,6 +247,11 @@ public class VisaoPedido extends javax.swing.JFrame {
             Logger.getLogger(VisaoPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonVisualizarReceitaActionPerformed
+=======
+    private void jButtonRecusarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRecusarActionPerformed
+        //nao usa
+    }//GEN-LAST:event_jButtonRecusarActionPerformed
+>>>>>>> origin/master
 
     /**
      * @param args the command line arguments

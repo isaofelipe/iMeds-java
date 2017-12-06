@@ -48,6 +48,11 @@ public class ConsultarPedidosFarmacia extends javax.swing.JFrame {
         jLabel1.setText("Consultar Pedidos Abertos");
 
         jButtonAtualizar.setText("Atualizar");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarActionPerformed(evt);
+            }
+        });
 
         jButtonVoltar.setText("Voltar");
         jButtonVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -166,6 +171,10 @@ public class ConsultarPedidosFarmacia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonVisualizarActionPerformed
 
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
+       this.carregar();
+    }//GEN-LAST:event_jButtonAtualizarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -204,6 +213,7 @@ public class ConsultarPedidosFarmacia extends javax.swing.JFrame {
     private void carregar(){
         List<Pedido> listaPedidos =  new ConsultarPedidosFarmaciaControle().listarPedidosAbertos();
         javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel)jTablePedidos.getModel();
+        dtm.setRowCount(0);
         for (Pedido pedido : listaPedidos)
         {
             dtm.addRow(new Object[]{pedido.getIdPedido(), pedido.getCliente(), pedido.getDataHora().toString()});
